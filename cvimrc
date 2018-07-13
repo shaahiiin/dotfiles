@@ -1,0 +1,17 @@
+" config for cVim (Chrome extension for Vim-like keybindings)
+" Doc:
+" https://github.com/1995eaton/chromium-vim#what-is-cvim
+
+set nohud
+set smoothscroll
+let scrollstep = 130
+getIP() -> {{
+httpRequest({url: 'http://api.ipify.org/?format=json', json: true},
+            function(res) { Status.setMessage('IP: ' + res.ip); });
+}}
+" Displays your public IP address in the status bar
+map ci :call getIP<CR>
+
+let blacklists = ["https://leap2.clairvolex.com/*"]
+
+" TODO: Add code for reading cVimrc from local system
