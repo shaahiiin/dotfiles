@@ -1,0 +1,32 @@
+# powerline configs
+
+{
+    "segments": {
+        "right": [
+            {
+                "function": "powerline.segments.common.players.spotify",
+                "name": "player"
+            },
+            {
+                "function": "powerline.segments.common.time.date"
+            },
+            {
+                "function": "powerline.segments.common.time.date",
+                "name": "time",
+                "args": {
+                    "format": "%I:%M %p",
+                    "istime": true
+                }
+            },
+            {
+                "function": "powerline.segments.common.net.hostname",
+                "args": {
+                    "only_if_ssh": false
+                }
+            },
+            {
+                "function": "powerline.segments.common.bat.battery"
+            }
+        ]
+    }
+}
