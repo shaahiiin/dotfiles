@@ -46,8 +46,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdcommenter'                            " easy commenting
 "Plug 'tpope/vim-commentary'                               " easy commenting
 Plug 'tpope/vim-surround'                                  " quoting/parenthesizing
-Plug 'tpope/vim-abolish'                                   " coercion (change case of variable)
-Plug 'jiangmiao/auto-pairs'                                " auto open/close brackets
+Plug 'tpope/vim-abolish'                                   " coercion (change case of a text)
+Plug 'jiangmiao/auto-pairs'                                " automatically open brackets in pairs
+Plug 'gcmt/wildfire.vim'                                   " smart select inner text objects
 
 " Motions
 "Plug 'easymotion/vim-easymotion'                          " easy motions
@@ -75,18 +76,19 @@ Plug 'vim-airline/vim-airline-themes'                      " themes for airline
 "Plug 'yuttie/comfortable-motion.vim'                      " Smooth scrolling
 "Plug 'Yggdroot/indentLine'                                " Indent guides
 Plug 'google/vim-searchindex'                              " show result count while searching
+Plug 'chrisbra/Colorizer'                                  " display css colors
 
 " Syntax highlight / language packs
-Plug 'w0rp/ale'                                            " syntax plugin
+Plug 'dense-analysis/ale'                                  " syntax plugin
 "Plug 'scrooloose/syntastic'                               " syntax plugin
-Plug 'tasn/vim-tsx'                                        " tsx syntax highlighting
-Plug 'leafgarland/typescript-vim'                          " typescript syntax highlighting
+" Plug 'peitalin/vim-jsx-typescript'                         " tsx syntax highlighting
+" Plug 'leafgarland/typescript-vim'                          " typescript syntax highlighting
 Plug 'HerringtonDarkholme/yats.vim'                        " typescript syntax file (dependency for below)
-Plug 'mhartington/nvim-typescript', {'do': ':!install.sh \| UpdateRemotePlugins'}  " typescript
+" Plug 'mhartington/nvim-typescript', {'do': ':!install.sh \| UpdateRemotePlugins'}  " typescript
 Plug 'vim-python/python-syntax'                            " python syntax highlighting
 "Plug 'python-mode/python-mode',{ 'branch': 'develop' }    " python support - NOT WORKING
 "Plug 'pangloss/vim-javascript'                            " js syntax highlighting
-Plug 'sheerun/vim-polyglot'                                " language packs
+"Plug 'sheerun/vim-polyglot'                                " language packs
 
 " Utility / Tools
 Plug 'tpope/vim-fugitive'                                  " git wrapper
@@ -95,11 +97,13 @@ Plug 'christoomey/vim-tmux-navigator'                      " vim - tmux pane swi
 " Plug 'ctrlpvim/ctrlp.vim'                                " fuzzy file/buffer/mru/tag search
 Plug '/usr/local/opt/fzf'                                  " fuzzy file/buffer/mru/tag search (cmd line tool - installed with homebrew)
 Plug 'junegunn/fzf.vim'                                    " vim plugin
-Plug 'mileszs/ack.vim'                                     " code searching tool (using ag)
+"Plug 'mileszs/ack.vim'                                     " code searching tool (using ag) [ replaced by fzf.vim+ag ]
 "Plug 'jceb/vim-orgmode'                                   " emacs org mode for vim
 "Plug 'tpope/vim-dadbod'                                   " db conn with vim
 "Plug 'takac/vim-hardtime'                                 " add delay on hjkl keys (easier hardmode)
 Plug 'tpope/vim-obsession'                                 " Saves vim session
+Plug 'voldikss/vim-floaterm'                               " show terminal using floating window
+Plug 'mhinz/vim-startify'                                  " custom start screen
 
 " Fun
 Plug 'johngrib/vim-game-code-break'                        " vim game code break
@@ -111,47 +115,47 @@ nnoremap <Space> <nop>
 let mapleader = ","
 " }}}
 
-" Basic key map {{{
-
+" Basic key maps {{{
 " Disable accidental Ex mode
 :nnoremap Q <Nop>
-
-" Easy buffer switching
-nnoremap gb :buffers<CR>:b
-
+" Close current buffer (safely)
+nnoremap <C-q> :bd<CR>
 " Save file/buffer
-noremap <silent> <C-S> :update<CR>
-
+nnoremap <silent> <C-s> :update<CR>
 " Enable j/k to work on wrapped lines
 "noremap j gj
 "noremap k gk
-
 " Swap ' and `
 "nnoremap ' `
 "nnoremap ` '
-
 " Toggle relative numbers
 nnoremap <leader>tn :set rnu!<CR>:set rnu?<CR>
 " Toggle hl search
 nnoremap <leader>th :set hls!<CR>:set hls?<CR>
 " remove highlight from search
 nnoremap <silent> <leader>oh :noh<CR>
-
 " edit vimrc
 nnoremap <leader>ev :e $MYVIMRC<CR>
 " source vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
-
 " vim split keymap
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
 " }}}
 
 " NerdTree {{{
 map <C-n> :NERDTreeToggle<CR>
+" }}}
+
+" FZF {{{
+" Show FZF
+nnoremap <C-g> :FZF<CR>
+" Show Ag
+nnoremap <M-g> :Ag<CR>
+" show buffers
+nnoremap gb :Buffers<CR>
 " }}}
 
 " Tagbar {{{
@@ -180,15 +184,14 @@ map <C-n> :NERDTreeToggle<CR>
 " gutter symbols
 " let g:ale_sign_error = '✗'
 " let g:ale_sign_warning = '∆'
-
 let g:ale_sign_error = '• '
 let g:ale_sign_warning = '•  '
 let g:airline#extensions#ale#error_symbol='• '
 let g:airline#extensions#ale#warning_symbol='•  '
 
 " handle when to lint a file
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 1
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_insert_leave = 1
 
 " auto complete
 let g:ale_completion_enabled = 1
@@ -309,3 +312,24 @@ noremap <leader>os :call DeleteTrailingWS()<CR>
 
 " Format json file [TODO: Run only on .json extension files]
 "nnoremap <leader>fj :exe '%!python -m json.tool'<CR>
+
+" vim-jsx-typescript {{{
+" set filetypes as typescript.tsx
+" autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+" }}}
+
+" Auto pairs {{{
+" let g:AutoPairsShortcutToggle=shellescape('<M-;>')
+" }}}
+
+" Wildfire {{{
+" This selects the next closest text object
+map <SPACE> <Plug>(wildfire-fuel)
+" This selects the previous closest text object.
+vmap <C-SPACE> <Plug>(wildfire-water)
+" }}}
+" Startify {{{
+let g:ascii = [
+        \]
+let g:startify_custom_header = 'map(g:ascii + startify#fortune#boxed(), "\"   \".v:val")'
+" }}}
