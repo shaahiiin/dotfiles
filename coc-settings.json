@@ -1,0 +1,12 @@
+{
+    "tslint.alwaysShowRuleFailuresAsWarnings": false,
+    "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "coc.preferences.formatOnSaveFiletypes": [],
+    "python.jediEnabled": false,
+    "python.formatting.provider": "black",
+    "python.sortImports.path": "isort",
+    // MPLS linting config
+    "python.analysis.errors": ["undefined-variable"],
+    "python.analysis.warnings": ["unknown-parameter-name"],
+    "python.analysis.information": ["unresolved-import"]
+}
