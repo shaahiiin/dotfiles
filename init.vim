@@ -43,19 +43,23 @@ Plug 'liuchengxu/vista.vim'                                   " view tags and LS
 " Plug 'mcchrish/nnn.vim'                                       " vim plugin for nnn - file browser
 " ==================================================== }}}
 
-" ================ Themes / Colorschemes ============= {{{
+" ================ Colorschemes/Themes =============== {{{
 Plug 'ayu-theme/ayu-vim'
 " Plug 'rakr/vim-two-firewatch'
 Plug 'whatyouhide/vim-gotham'
-Plug 'danilo-augusto/vim-afterglow'
+" Plug 'danilo-augusto/vim-afterglow'
 " Plug 'mhartington/oceanic-next'
 " Plug 'cocopon/iceberg.vim/'
 " Plug 'arcticicestudio/nord-vim'
-" Plug 'gruvbox-community/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 " Plug 'liuchengxu/space-vim-dark'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'skbolton/embark'
 Plug 'chuling/equinusocio-material.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'liuchengxu/space-vim-dark'
+Plug 'Badacadabra/vim-archery'
 " ==================================================== }}}
 
 " ================ Appearance ======================== {{{
@@ -107,7 +111,7 @@ Plug 'mhinz/vim-startify'                                     " custom start scr
 " Plug 'hardcoreplayers/dashboard-nvim'                         " vim dashboard
 Plug 'chrisbra/NrrwRgn'                                       " narrow region like emacs
 " Plug 'wakatime/vim-wakatime'                                  " Coding time stat tracker
-" Plug 'AndrewRadev/linediff.vim'                               " Diff two blocks of code in same file
+Plug 'AndrewRadev/linediff.vim'                               " Diff two blocks of code in same file
 " Plug 'gioele/vim-autoswap'                                    " Smartly deal with swap files
 " Plug 'thaerkh/vim-workspace'                                  " Manage sessions in workspaces
 " Plug 'SirVer/ultisnips'                                       " Snippet engine
@@ -118,6 +122,10 @@ Plug 'justinmk/vim-dirvish'                                   " browse directory
 Plug 'lfv89/vim-interestingwords'                             " highlight different words throughout the buffer
 Plug 'airblade/vim-rooter'                                    " change pwd to project root if exists
 " ==================================================== }}}
+
+" Meta {{{
+" Plug 'ThePrimeagen/vim-apm' | set kscb " Requires PR branch
+" }}}
 
 " ================ Fun =============================== {{{
 " Plug 'johngrib/vim-game-code-break'                           " vim game code break
@@ -150,7 +158,7 @@ au FileType python
     \ setlocal autoindent |
     \ setlocal fileformat=unix |
 
-set clipboard=unnamed,unnamedplus   " share system clipboard with vim register
+set clipboard+=unnamedplus   " share system clipboard with vim register
 if (has('mouse'))
     set mouse=a         " mouse support in all modes (:h mouse)
 endif
@@ -162,7 +170,7 @@ set backspace=indent,eol,start  " normal backspace behaviour
 " Appearance {{{
 set number              " show line numbers (if relative number is set, shows line number on current line)
 " set relativenumber    " set relative line numbering (for easier jumping with j and k)
-set cursorline          " show cursor line
+" set cursorline          " show cursor line TODO: does this slow down vim perf
 set synmaxcol=0         " set syntax highlighting for long columns (> 3000 column length)
 set showcmd             " Show incomplete cmds down the bottom
 set noshowmode          " Do not show current mode (statusline handles it)
@@ -254,7 +262,7 @@ nnoremap q :confirm bd<CR>
 nnoremap Q :confirm qa<CR>
 
 " give it a try and you will like it
-nnoremap ; :
+" nnoremap ; : " Mapped this in FZF to :Commands
 " nnoremap : ;
 
 " switch buffer
@@ -275,7 +283,7 @@ nnoremap [q :cp<CR>
 " nnoremap <Tab> <C-w><C-w>
 " nnoremap <S-Tab> <C-w><C-w>
 " Save file/buffer
-nnoremap <silent> <C-s> :update<CR>
+nnoremap <silent> <S-s> :update<CR>:echo 'Saved..'<CR>
 
 " Y should work like C and D
 nnoremap Y y$
@@ -395,23 +403,6 @@ let g:Illuminate_ftblacklist = ['nerdtree', 'dashboard', '__vista__']
 " scrooloose/nerdtree
 
 let NERDTreeQuitOnOpen = 1
-
-" TODO: add hjkl mappings for nerdtree
-" augroup NERDTreeMappings
-"     autocmd!
-"     autocmd VimEnter * call NERDTreeAddKeyMap({
-"         \ 'key': 'l',
-"         \ 'callback': "NERDTreeOpenDir",
-"         \ 'quickhelpText': 'open dir',
-"         \ 'scope': 'DirNode' })
-" augroup end
-
-" function! NERDTreeOpenDir()
-"     let n = g:NERDTreeFileNode.GetSelected()
-"     if n != {}
-"         call n.activate(0)
-"     endif
-" endfunction
 
 " TODO: add autocmd for handling quit when both nerdtree and vista are open
 " Quit if NerdTree is the last buffer
@@ -578,7 +569,7 @@ set nobackup
 set nowritebackup
 
 " Better display for messages
-set cmdheight=2
+" set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -668,11 +659,11 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " To select selections ranges (like wildfire.vim), needs server support, like: coc-tsserver, coc-python
-nmap <silent> + <Plug>(coc-range-select)
-xmap <silent> + <Plug>(coc-range-select)
+" nmap <silent> + <Plug>(coc-range-select)
+" xmap <silent> + <Plug>(coc-range-select)
 
-nmap <silent> - <Plug>(coc-range-select-backward)
-xmap <silent> - <Plug>(coc-range-select-backward)
+" nmap <silent> - <Plug>(coc-range-select-backward)
+" xmap <silent> - <Plug>(coc-range-select-backward)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -705,6 +696,11 @@ nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
 nnoremap <silent> <leader>clp  :<C-u>CocListResume<CR>
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
+" ==================================================== }}}
+
+" ================= GitGutter ======================== {{{
+nnoremap ]h :GitGutterNextHunk<CR>
+nnoremap [h :GitGutterPrevHunk<CR>
 " ==================================================== }}}
 
 " ================= Neoformat ======================== {{{
@@ -770,8 +766,8 @@ endif
 " colo gotham256
 " colo dracula
 
-colo embark
-let g:embark_terminal_italics = 1
+" colo embark
+" let g:embark_terminal_italics = 1
 
 " let g:equinusocio_material_style = 'pure'
 " let g:equinusocio_material_less = 50
@@ -781,6 +777,16 @@ let g:embark_terminal_italics = 1
 " let g:lightline = {
 "   \ 'colorscheme': 'equinusocio_material',
 "   \ }
+
+" colo purify
+
+set bg=light
+colo gruvbox
+
+" Make background transparent
+" hi Normal     ctermbg=NONE guibg=NONE
+" hi LineNr     ctermbg=NONE guibg=NONE
+" hi SignColumn ctermbg=NONE guibg=NONE
 
 " Remove ~ chars from end of file (set after colorscheme set)
 hi NonText guifg=bg
@@ -828,14 +834,14 @@ let g:lightline#bufferline#show_number  = 1
 let g:lightline#bufferline#shorten_path = 1
 let g:lightline#bufferline#unnamed      = '[No Name]'
 let g:lightline#bufferline#show_number  = 2
-let g:lightline#bufferline#number_separator = ': '
+let g:lightline#bufferline#number_separator = ' '
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
 let g:lightline#bufferline#clickable = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'embark'
+let g:lightline.colorscheme = 'gruvbox'
 let g:lightline.mode_map = {
     \   'n' : 'N',
     \   'i' : 'I',
@@ -851,7 +857,7 @@ let g:lightline.mode_map = {
     \ }
 let g:lightline.active = {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'blame' ] ],
+    \             [ 'gitbranch', 'filename', 'readonly', 'blame' ] ],
     \   'right': [ [ 'lineinfo' ],
     \              [ 'percent' ],
     \              [ 'filetype' ] ] ,
@@ -861,8 +867,8 @@ let g:lightline.tabline = {
     \   'right': [ ['close'] ]
     \ }
 let g:lightline.component = {
-	\   'lineinfo': ' %3l:%-2v',
-	\ }
+    \   'lineinfo': ' %3l:%-2v',
+    \ }
 let g:lightline.component_expand = {
     \   'buffers': 'lightline#bufferline#buffers'
     \ }
@@ -870,8 +876,10 @@ let g:lightline.component_type = {
     \   'buffers': 'tabsel'
     \ }
 let g:lightline.component_function = {
-    \   'blame': 'LightlineGitBlame',
+    \   'blame'    : 'LightlineGitBlame',
     \   'gitbranch': 'fugitive#head',
+    \   'readonly' : 'LightlineReadonly',
+    \   'filename' : 'LightlineFilename',
     \ }
 let g:lightline.component_raw = {
     \ 'buffers': 1
@@ -883,10 +891,28 @@ let g:lightline.subseparator = {
     \   'left': '', 'right': '' 
     \ }
 
+function! LightlineFugitive()
+    if exists('*FugitiveHead')
+        let branch = FugitiveHead()
+        return branch !=# '' ? ''.branch : ''
+    endif
+    return ''
+endfunction
+
 function! LightlineGitBlame() abort
   let blame = get(b:, 'coc_git_blame', '')
   " return blame
   return winwidth(0) > 120 ? blame : ''
+endfunction
+
+function! LightlineReadonly()
+    return &readonly ? '' : ''
+endfunction
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
 endfunction
 
 command! LightlineReload call LightlineReload()
@@ -930,7 +956,8 @@ let g:startify_session_sort = 1
 let g:startify_session_before_save = [
 \   'echo "Cleaning up before saving.."',
 \   'silent! NERDTreeClose',
-\   'silent! Vista!'
+\   'silent! Vista!',
+\   'echo "Done"'
 \ ]
 
 " let g:startify_session_savevars = [
@@ -971,6 +998,7 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = [
 \   { 'v': '~/.config/nvim/init.vim' },
+\   { 'a': '~/.config/alacritty/alacritty.yml' },
 \   { 'z': '~/.zshrc' },
 \   { 'g': '~/.gitconfig' },
 \   { 'c': '~/.config/nvim/coc-settings.json' },
@@ -983,11 +1011,12 @@ let g:startify_commands = [
 \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
 \ ]
 
-augroup start_startify
-    autocmd!
-    autocmd VimEnter *
-    \    if !argc() | Startify | NERDTreeToggle | wincmd w | endif
-augroup END
+" warning: this messes with git diff / git log if (neo)vim is set as the git pager
+" augroup start_startify
+"     autocmd!
+"     autocmd VimEnter *
+"     \    if !argc() | Startify | NERDTreeToggle | wincmd w | endif
+" augroup END
 
 nnoremap <Space>bh :Startify<CR>
 " ==================================================== }}}
