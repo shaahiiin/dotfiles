@@ -21,15 +21,17 @@ Plug 'tommcdo/vim-lion'                                       " aligning text ar
 " ==================================================== }}}
 
 " ================ Motions =========================== {{{
-Plug 'easymotion/vim-easymotion'                              " easy motions
+" Plug 'easymotion/vim-easymotion'                              " easy motions
 " Plug 'rhysd/clever-f.vim'                                     " use f / F motions without ; / ,
 " Plug 'junegunn/vim-slash'                                     " improve search highlight
 " ==================================================== }}}
 
 " ================ Code structure ==================== {{{
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }              " python fold support
-" Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind']} " file explorer
-Plug 'preservim/nerdtree'                                     " file explorer
+" Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind']}   " file explorer
+" Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle','NERDTreeFind']}    " file explorer
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'} " file explorer
+" Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 " if has('nvim')
 "   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 " else
@@ -41,25 +43,27 @@ Plug 'preservim/nerdtree'                                     " file explorer
 Plug 'liuchengxu/vista.vim'                                   " view tags and LSP symbols
 " Plug 'kshenoy/vim-signature'                                  " better management of marks
 " Plug 'mcchrish/nnn.vim'                                       " vim plugin for nnn - file browser
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }              " python fold support
 " ==================================================== }}}
 
 " ================ Colorschemes/Themes =============== {{{
 Plug 'ayu-theme/ayu-vim'
 " Plug 'rakr/vim-two-firewatch'
-Plug 'whatyouhide/vim-gotham'
+" Plug 'whatyouhide/vim-gotham'
 " Plug 'danilo-augusto/vim-afterglow'
 " Plug 'mhartington/oceanic-next'
 " Plug 'cocopon/iceberg.vim/'
 " Plug 'arcticicestudio/nord-vim'
-Plug 'gruvbox-community/gruvbox'
+" Plug 'gruvbox-community/gruvbox'
 " Plug 'liuchengxu/space-vim-dark'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'skbolton/embark'
-Plug 'chuling/equinusocio-material.vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
-Plug 'liuchengxu/space-vim-dark'
-Plug 'Badacadabra/vim-archery'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'skbolton/embark'
+" Plug 'chuling/equinusocio-material.vim'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'kyoz/purify', { 'rtp': 'vim' }
+" Plug 'liuchengxu/space-vim-dark'
+" Plug 'Badacadabra/vim-archery'
+" Plug 'kyazdani42/blue-moon'
 " ==================================================== }}}
 
 " ================ Appearance ======================== {{{
@@ -67,9 +71,8 @@ Plug 'itchyny/lightline.vim'                                  " status line
 Plug 'mengelbrecht/lightline-bufferline'                      " bufferline
 " Plug 'vim-airline/vim-airline'                                " status line
 " Plug 'vim-airline/vim-airline-themes'                         " themes for airline
-" Plug 'altercation/vim-colors-solarized'                     " solarized theme
 " Plug 'Yggdroot/indentLine'                                  " Indent guides
-Plug 'google/vim-searchindex'                                 " show result count while searching
+" Plug 'google/vim-searchindex'                                 " show result count while searching
 " Plug 'chrisbra/Colorizer'                                   " display css colors
 " Plug 'severin-lemaignan/vim-minimap'                        " minimap like SublimeText (NOT WORKING)
 Plug 'ryanoasis/vim-devicons'                                 " support file icons, etc
@@ -103,15 +106,15 @@ Plug 'airblade/vim-gitgutter'                                 " show git diff in
 " Plug 'christoomey/vim-tmux-navigator'                         " vim - tmux pane switching
 " Plug 'ctrlpvim/ctrlp.vim'                                     " fuzzy file/buffer/mru/tag search
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'           " fuzzy search tool (cmd line tool - installed with homebrew)
-Plug 'tpope/vim-dadbod'                                       " db conn with vim
+" Plug 'tpope/vim-dadbod'                                       " db conn with vim
 " Plug 'psliwka/vim-smoothie'                                   " Smooth scrolling
 " Plug 'takac/vim-hardtime'                                     " add delay on hjkl keys (easier hardmode)
 " Plug 'tpope/vim-obsession'                                    " Easy vim session
 Plug 'mhinz/vim-startify'                                     " custom start screen, session management
 " Plug 'hardcoreplayers/dashboard-nvim'                         " vim dashboard
 Plug 'chrisbra/NrrwRgn'                                       " narrow region like emacs
+Plug 'AndrewRadev/linediff.vim'                               " narrow region two blocks of code
 " Plug 'wakatime/vim-wakatime'                                  " Coding time stat tracker
-Plug 'AndrewRadev/linediff.vim'                               " Diff two blocks of code in same file
 " Plug 'gioele/vim-autoswap'                                    " Smartly deal with swap files
 " Plug 'thaerkh/vim-workspace'                                  " Manage sessions in workspaces
 " Plug 'SirVer/ultisnips'                                       " Snippet engine
@@ -119,18 +122,14 @@ Plug 'AndrewRadev/linediff.vim'                               " Diff two blocks 
 Plug 'simnalamburt/vim-mundo'                                 " undo tree plugin
 Plug 'liuchengxu/vim-which-key',{'on': ['WhichKey', 'WhichKey!']} " interactively show mappings
 Plug 'justinmk/vim-dirvish'                                   " browse directory / files
-Plug 'lfv89/vim-interestingwords'                             " highlight different words throughout the buffer
+" Plug 'lfv89/vim-interestingwords'                             " highlight different words throughout the buffer
 Plug 'airblade/vim-rooter'                                    " change pwd to project root if exists
 " ==================================================== }}}
-
-" Meta {{{
-" Plug 'ThePrimeagen/vim-apm' | set kscb " Requires PR branch
-" }}}
 
 " ================ Fun =============================== {{{
 " Plug 'johngrib/vim-game-code-break'                           " vim game code break
 " Plug 'skywind3000/vim-keysound'                               " play typewriter sounds on keystroke in insert mode
-Plug 'norcalli/typeracer.nvim'                                    " play typing speed game
+" Plug 'norcalli/typeracer.nvim'                                    " play typing speed game
 " ==================================================== }}}
 
 call plug#end()
@@ -171,10 +170,11 @@ set backspace=indent,eol,start  " normal backspace behaviour
 set number              " show line numbers (if relative number is set, shows line number on current line)
 " set relativenumber    " set relative line numbering (for easier jumping with j and k)
 " set cursorline          " show cursor line TODO: does this slow down vim perf
-set synmaxcol=0         " set syntax highlighting for long columns (> 3000 column length)
+" set synmaxcol=0         " set syntax highlighting for long columns (> 3000 column length)
 set showcmd             " Show incomplete cmds down the bottom
 set noshowmode          " Do not show current mode (statusline handles it)
-set lazyredraw          " redraw only when we need to.
+set lazyredraw          " redraw only when we need to
+set nowrap
 
 if (has('nvim'))
     set pumblend=20         " transparency in pop-up menu
@@ -192,6 +192,7 @@ set magic               " Set magic on, for regex (avoid lot of backslash escape
 if (has('nvim'))
     set inccommand=nosplit " Shows the effects of a substitution incrementally as you type, but don't open split
 endif
+set shortmess-=S
 " }}}
 
 " Buffers {{{
@@ -251,8 +252,29 @@ let mapleader = " "
 
 " Disable accidental Ex mode
 " nnoremap Q <Nop>
-" who the f uses macros? (use :map q q if macros needed)
 nnoremap q <Nop>
+
+" numbers and symbols swap {{{
+nnoremap 1 !
+nnoremap 2 @
+nnoremap 3 #
+nnoremap 4 $
+nnoremap 5 %
+nnoremap 6 ^
+nnoremap 7 &
+nnoremap 8 *
+nnoremap 9 (
+           
+nnoremap ! 1
+nnoremap @ 2
+nnoremap # 3
+nnoremap $ 4
+nnoremap % 5
+nnoremap ^ 6
+nnoremap & 7
+nnoremap * 8
+nnoremap ( 9
+" }}}
 
 " Emacs style bindings in command mode
 cnoremap <C-a> <C-b>
@@ -262,8 +284,8 @@ nnoremap q :confirm bd<CR>
 nnoremap Q :confirm qa<CR>
 
 " give it a try and you will like it
-" nnoremap ; : " Mapped this in FZF to :Commands
-" nnoremap : ;
+nnoremap ; :
+vnoremap ; :
 
 " switch buffer
 if (has("gui_running"))
@@ -318,8 +340,15 @@ nnoremap < <<
 vnoremap > >gv
 vnoremap < <gv
 
+" Do exact string search
+nnoremap g/ /\<\><left><left>
+" Do exact string in visually selected text
+vnoremap g/ /\%V\<\><left><left>
+
 " Search withing visually selected text
 vnoremap <M-/> <Esc>/\%V
+" Search within screen
+nnoremap <M-/> HVL<Esc>/\%V
 
 " Substitutions
 vnoremap gs "zy:%s/<C-r>"//gc<left><left><left>
@@ -338,32 +367,24 @@ endfunc
 
 nnoremap <leader>os :call DeleteTrailingWS()<CR>
 
+" Delete empty buffers (buffers with title "[No Name]")
+" Mapped in vim-which-key
+function! s:CleanEmptyBuffers()
+    let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
+    if !empty(buffers)
+        exe 'bw ' . join(buffers, ' ')
+    endif
+endfunction
+
+nnoremap <leader>bc :call DeleteEmptyBuffers()<CR>
+
+" autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 " Highlight yanked text briefly
-" Handled by coc-yank
-" augroup highlight_yank
-"     autocmd!
-"     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 250)
-" augroup END
-" ==================================================== }}}
-
-" ================ EasyMotion ======================== {{{
-" easymotion/vim-easymotion
-" map s <Plug>(easymotion-prefix)
-let g:EasyMotion_do_mapping = 0 " disable default mappings
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ASDGHKLQWERTYUIOPZXCVBNMFJ;'
-let g:EasyMotion_space_jump_first = 1
-let g:EasyMotion_enter_jump_first = 1
-
-" nmap <leader>g <Plug>(easymotion-bd-w)
-nmap s <Plug>(easymotion-overwin-f2)
-" While doing an edit, f/t should work in line
-omap t <Plug>(easymotion-tl)
-omap f <Plug>(easymotion-fl)
-
-" jk motions: line motions
-" map <Leader>j <Plug>(easymotion-j)
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 100)
+augroup END
 " ==================================================== }}}
 
 " ================ Narrow region =====================  {{{
@@ -378,19 +399,9 @@ let g:nrrw_rgn_nomap_Nr = 1
 
 " ==================================================== }}}
 
-" ================ InterestingWords ================== {{{
-" lfv89/vim-interestingwords
-
-nnoremap <silent> <leader>hk :call InterestingWords('n')<cr>
-nnoremap <silent> <leader>hK :call UncolorAllWords()<cr>
-
-" nnoremap <silent> n :call WordNavigation('forward')<cr>
-" nnoremap <silent> N :call WordNavigation('backward')<cr>
-" ==================================================== }}}
-
 " ================ illuminate ======================== {{{
 " RRethy/vim-illuminate
-let g:Illuminate_ftblacklist = ['nerdtree', 'dashboard', '__vista__']
+" let g:Illuminate_ftblacklist = ['nerdtree', 'dashboard', '__vista__']
 " let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python']
 " ==================================================== }}}
 
@@ -399,57 +410,83 @@ let g:Illuminate_ftblacklist = ['nerdtree', 'dashboard', '__vista__']
 " let g:rooter_patterns = ['Rakefile', '.git/']
 " ==================================================== }}}
 
-" ================= NerdTree ========================= {{{
-" scrooloose/nerdtree
+" ================= LuaTree ========================== {{{
+"" kyazdani42/nvim-tree.lua
 
-let NERDTreeQuitOnOpen = 1
+" let g:lua_tree_side = 'right' " 'right' | 'left' left by default
+" let g:lua_tree_size = 40 "30 by default
+let g:lua_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+" let g:lua_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
+let g:lua_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
+let g:lua_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+" let g:lua_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+" let g:lua_tree_show_icons = {
+"     \ 'git': 1,
+"     \ 'folders': 1,
+"     \ 'files': 1,
+"     \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath
 
-" TODO: add autocmd for handling quit when both nerdtree and vista are open
-" Quit if NerdTree is the last buffer
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" You can edit keybindings be defining this variable
+" You don't have to define all keys.
+" NOTE: the 'edit' key will wrap/unwrap a folder and open a file
+let g:lua_tree_bindings = {
+    \ 'edit':           '<CR>',
+    \ 'edit_vsplit':    '<C-v>',
+    \ 'edit_split':     '<C-x>',
+    \ 'edit_tab':       '<C-t>',
+    \ 'toggle_ignored': 'I',
+    \ 'preview':        '<Tab>',
+    \ 'cd':             '<C-]>',
+    \ 'create':         'a',
+    \ 'remove':         'd',
+    \ 'rename':         'r',
+    \ 'cut':            'x',
+    \ 'copy':           'c',
+    \ 'paste':          'p',
+    \ 'prev_git_item':  '[c',
+    \ 'next_git_item':  ']c',
+    \ }
 
-nnoremap <F2> :NERDTreeToggle<CR>
+" Disable default mappings by plugin
+" Bindings are enable by default, disabled on any non-zero value
+" let lua_tree_disable_keybindings=1
+
+" default will show icon by default if no icon is provided
+" default shows no icon by default
+let g:lua_tree_icons = {
+    \ 'default': ' ',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "═",
+    \   'renamed': "➜",
+    \   'untracked': "★"
+    \   },
+    \ 'folder': {
+    \   'default': "",
+    \   'open': ""
+    \   }
+    \ }
+
+nnoremap <F2> :LuaTreeToggle<CR>
+" nnoremap <leader>r :LuaTreeRefresh<CR>
+" nnoremap <S-<F2>> :LuaTreeFindFile<CR>
+" LuaTreeOpen and LuaTreeClose are also available if you need them
+
+" set termguicolors " this variable must be enabled for colors to be applied properly
+
+" a list of groups can be found at `:help lua_tree_highlight`
+" highlight LuaTreeFolderIcon guibg=blue
 " ==================================================== }}}
 
-" ================= Tagbar =========================== {{{
-" majutsushi/tagbar
-" nnoremap <F3> :TagbarToggle<CR>
+" ================= CHADTree ========================= {{{
+" ms-jpq/chadtree
 
-" Set default width
-let g:tagbar_width = 30
-" Vanilla method
-" let g:tagbar_type_typescript = {
-"   \ 'ctagstype': 'typescript',
-"   \ 'kinds': [
-"     \ 'c:classes',
-"     \ 'n:modules',
-"     \ 'f:functions',
-"     \ 'v:variables',
-"     \ 'v:varlambdas',
-"     \ 'm:members',
-"     \ 'i:interfaces',
-"     \ 'e:enums',
-"   \ ]
-" \ }
+" nnoremap <F2> <cmd>CHADopen<cr>
 
-" let g:tagbar_type_typescript = {
-"   \ 'ctagsbin' : 'tstags',
-"   \ 'ctagsargs' : '-f-',
-"   \ 'kinds': [
-"     \ 'e:enums:0:1',
-"     \ 'f:function:0:1',
-"     \ 't:typealias:0:1',
-"     \ 'M:Module:0:1',
-"     \ 'I:import:0:1',
-"     \ 'i:interface:0:1',
-"     \ 'C:class:0:1',
-"     \ 'm:method:0:1',
-"     \ 'p:property:0:1',
-"     \ 'v:variable:0:1',
-"     \ 'c:const:0:1',
-"   \ ],
-"   \ 'sort' : 0
-" \ }
 " ==================================================== }}}
 
 " ================= Vista ============================ {{{
@@ -557,6 +594,8 @@ nnoremap <silent> <Space>tc :Colors<CR>
 nnoremap <silent> <Space>fb :Marks<CR>
 nnoremap <silent> <F1>      :Helptags<CR>
 
+nnoremap : :Commands<CR>
+
 imap <c-x><c-k> <plug>(fzf-complete-word)
 " imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
@@ -579,6 +618,8 @@ set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
+
+let g:coc_start_at_startup = 0
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -699,8 +740,8 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " ==================================================== }}}
 
 " ================= GitGutter ======================== {{{
-nnoremap ]h :GitGutterNextHunk<CR>
-nnoremap [h :GitGutterPrevHunk<CR>
+" nnoremap ]h :GitGutterNextHunk<CR>
+" nnoremap [h :GitGutterPrevHunk<CR>
 " ==================================================== }}}
 
 " ================= Neoformat ======================== {{{
@@ -727,19 +768,13 @@ nnoremap <F4> :MundoToggle<CR>
 let g:mundo_right = 1
 " ==================================================== }}}
 
-" ================= NerdCommenter ==================== {{{
-" scrooloose/nerdcommenter
-
-let g:NERDSpaceDelims = 1
-" ==================================================== }}}
-
 " ================= Themes/Colorschemes ============== {{{
 if (has("termguicolors"))
   set termguicolors
 endif
 
-" let ayucolor="mirage"
-" colorscheme ayu
+let ayucolor="mirage"
+colorscheme ayu
 
 " set t_Co=256
 
@@ -765,6 +800,7 @@ endif
 " colo nord
 " colo gotham256
 " colo dracula
+" colo blue-moon
 
 " colo embark
 " let g:embark_terminal_italics = 1
@@ -780,8 +816,8 @@ endif
 
 " colo purify
 
-set bg=light
-colo gruvbox
+" set bg=light
+" colo gruvbox
 
 " Make background transparent
 " hi Normal     ctermbg=NONE guibg=NONE
@@ -789,8 +825,9 @@ colo gruvbox
 " hi SignColumn ctermbg=NONE guibg=NONE
 
 " Remove ~ chars from end of file (set after colorscheme set)
-hi NonText guifg=bg
-
+highlight NonText guifg=bg
+" comments should be italic
+highlight Comment cterm=italic gui=italic
 " ==================================================== }}}
 
 " ================= Rainbow ========================== {{{
@@ -834,14 +871,14 @@ let g:lightline#bufferline#show_number  = 1
 let g:lightline#bufferline#shorten_path = 1
 let g:lightline#bufferline#unnamed      = '[No Name]'
 let g:lightline#bufferline#show_number  = 2
-let g:lightline#bufferline#number_separator = ' '
+let g:lightline#bufferline#number_separator = '│'
 let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#unicode_symbols = 1
 let g:lightline#bufferline#clickable = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'gruvbox'
+let g:lightline.colorscheme = 'ayu'
 let g:lightline.mode_map = {
     \   'n' : 'N',
     \   'i' : 'I',
@@ -990,15 +1027,16 @@ endfunction
 
 " startup list
 let g:startify_lists = [
-\   { 'header': [ '    Recent Commits'   ], 'type': function('s:list_commits'),  },
 \   { 'header': [ '    Sessions'         ], 'type': 'sessions',                  },
 \   { 'header': [ '    Bookmarks'        ], 'type': 'bookmarks',                 },
 \   { 'header': [ '    Commands'         ], 'type': 'commands',                  },
 \ ]
+" \   { 'header': [ '    Recent Commits'   ], 'type': function('s:list_commits'),  },
 
 let g:startify_bookmarks = [
 \   { 'v': '~/.config/nvim/init.vim' },
 \   { 'a': '~/.config/alacritty/alacritty.yml' },
+\   { 'r': '~/.config/karabiner/karabiner.json' },
 \   { 'z': '~/.zshrc' },
 \   { 'g': '~/.gitconfig' },
 \   { 'c': '~/.config/nvim/coc-settings.json' },
@@ -1018,7 +1056,7 @@ let g:startify_commands = [
 "     \    if !argc() | Startify | NERDTreeToggle | wincmd w | endif
 " augroup END
 
-nnoremap <Space>bh :Startify<CR>
+" nnoremap <Space>bh :Startify<CR>
 " ==================================================== }}}
 
 " ================= Dashboard-nvim =================== {{{
@@ -1230,13 +1268,14 @@ let g:which_key_map.f.d = 'open-vimrc'
 " Buffer maps
 let g:which_key_map.b   = { 'name' : '+Buffers' }
 
-let g:which_key_map.b.b = ['Buffers'   , 'Search']
-let g:which_key_map.b.d = ['bd'        , 'Delete']
-let g:which_key_map.b.f = ['bfirst'    , 'First']
-let g:which_key_map.b.h = ['Dashboard' , 'Home/Dashboard']
-let g:which_key_map.b.l = ['blast'     , 'Last']
-let g:which_key_map.b.n = ['bnext'     , 'Next']
-let g:which_key_map.b.p = ['bprevious' , 'Previous']
+let g:which_key_map.b.b = ['Buffers'   , 'search']
+let g:which_key_map.b.d = ['bd'        , 'delete']
+let g:which_key_map.b.f = ['bfirst'    , 'first']
+let g:which_key_map.b.h = ['Startify'  , 'home/dashboard']
+let g:which_key_map.b.l = ['blast'     , 'last']
+let g:which_key_map.b.n = ['bnext'     , 'next']
+let g:which_key_map.b.p = ['bprevious' , 'previous']
+let g:which_key_map.b.c = 'clear empty buffers'
 
 let g:which_key_map.b.1 = ['<Plug>lightline#bufferline#go(1)' , 'which_key_ignore']
 let g:which_key_map.b.2 = ['<Plug>lightline#bufferline#go(2)' , 'which_key_ignore']
@@ -1306,7 +1345,6 @@ let g:which_key_map.o = {
 " Check this out
 " Plug 'chxuan/change-colorscheme'
 " https://github.com/itchyny/calendar.vim
-" https://github.com/junegunn/goyo.vim
 " https://github.com/rhysd/clever-f.vim
 " https://github.com/zhaocai/GoldenView.Vim
 " https://github.com/kkoomen/vim-doge
