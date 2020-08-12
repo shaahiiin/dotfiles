@@ -1,9 +1,12 @@
 " ================ Vim config ========================
+"
+" TODO: join all mappings into one place
 
 " For python / ruby plugin
 let g:loaded_python_provider = 0
 let g:python3_host_prog='/usr/local/bin/python3'
 let g:ruby_host_prog='/usr/bin/ruby'
+let s:project_directories=['~/work', '~/code']
 
 " ================ Plugins =========================== {{{
 call plug#begin('~/.local/share/nvim/plugged')
@@ -47,22 +50,20 @@ Plug 'tmhedberg/SimpylFold', { 'for': 'python' }              " python fold supp
 " ==================================================== }}}
 
 " ================ Colorschemes/Themes =============== {{{
-Plug 'ayu-theme/ayu-vim'
-" Plug 'rakr/vim-two-firewatch'
+" Plug 'ayu-theme/ayu-vim'
 " Plug 'whatyouhide/vim-gotham'
 " Plug 'danilo-augusto/vim-afterglow'
 " Plug 'mhartington/oceanic-next'
 " Plug 'cocopon/iceberg.vim/'
 " Plug 'arcticicestudio/nord-vim'
-" Plug 'gruvbox-community/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 " Plug 'liuchengxu/space-vim-dark'
 " Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'skbolton/embark'
 " Plug 'chuling/equinusocio-material.vim'
-" Plug 'NLKNguyen/papercolor-theme'
-" Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'NLKNguyen/papercolor-theme'
 " Plug 'liuchengxu/space-vim-dark'
-" Plug 'Badacadabra/vim-archery'
+Plug 'Badacadabra/vim-archery'
 " Plug 'kyazdani42/blue-moon'
 " ==================================================== }}}
 
@@ -245,7 +246,7 @@ set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set list
 
 " Security {{{
-" modelines are dangerous
+" modelines can be dangerous
 set modelines=0
 set nomodeline
 " }}}
@@ -263,25 +264,25 @@ let mapleader = " "
 nnoremap q <Nop>
 
 " numbers and symbols swap {{{
-nnoremap 1 !
-nnoremap 2 @
-nnoremap 3 #
-nnoremap 4 $
-nnoremap 5 %
-nnoremap 6 ^
-nnoremap 7 &
-nnoremap 8 *
-nnoremap 9 (
+" nnoremap 1 !
+" nnoremap 2 @
+" nnoremap 3 #
+" nnoremap 4 $
+" nnoremap 5 %
+" nnoremap 6 ^
+" nnoremap 7 &
+" nnoremap 8 *
+" nnoremap 9 (
            
-nnoremap ! 1
-nnoremap @ 2
-nnoremap # 3
-nnoremap $ 4
-nnoremap % 5
-nnoremap ^ 6
-nnoremap & 7
-nnoremap * 8
-nnoremap ( 9
+" nnoremap ! 1
+" nnoremap @ 2
+" nnoremap # 3
+" nnoremap $ 4
+" nnoremap % 5
+" nnoremap ^ 6
+" nnoremap & 7
+" nnoremap * 8
+" nnoremap ( 9
 " }}}
 
 " Emacs style bindings in command mode
@@ -324,10 +325,6 @@ nnoremap <leader>tn :set rnu!<CR>:set rnu?<CR>
 nnoremap <leader>th :set hls!<CR>:set hls?<CR>
 " remove highlight from search
 nnoremap <silent> <leader>oh :noh<CR>
-" edit vimrc
-nnoremap <leader>fve :e $MYVIMRC<CR>
-" source vimrc
-nnoremap <leader>fvs :source $MYVIMRC<CR>
 " vim split keymap
 " map <C-h> <C-w>h
 " map <C-j> <C-w>j
@@ -349,9 +346,10 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Do exact string search
-nnoremap g/ /\<\><left><left>
+" nnoremap g/ /\<\><left><left>
 " Do exact string in visually selected text
-vnoremap g/ /\%V\<\><left><left>
+" vnoremap g/ <Esc>/\%V\<\><left><left>
+" how to do exact string search without fzf
 
 " Search withing visually selected text
 vnoremap <M-/> <Esc>/\%V
@@ -361,6 +359,15 @@ nnoremap <M-/> HVL<Esc>/\%V
 " Substitutions
 vnoremap gs "zy:%s/<C-r>"//gc<left><left><left>
 nnoremap gs :%s/<C-r><C-w>//gc<left><left><left>
+
+" Remap 'search mode' maps
+set wildcharm=<C-z>
+cnoremap <expr> <Tab>   getcmdtype() =~ '[\/?]' ? "<C-g>" : "<C-z>"
+cnoremap <expr> <S-Tab> getcmdtype() =~ '[\/?]' ? "<C-t>" : "<S-Tab>"
+
+" Terminal mode
+nnoremap <F6> :let $VIM_DIR=expand('%:p:h')<CR>:vs\|:te<CR>cd $VIM_DIR<CR>
+" tnoremap <Esc> <C-\><C-n> " messes with fzf floating window search
 
 " ==================================================== }}}
 
@@ -413,8 +420,21 @@ let g:nrrw_rgn_nomap_nr = 1
 let g:nrrw_rgn_nomap_Nr = 1
 
 " All maps will use buffers instead of windows
-" mappings at vim-which-key section
-
+" narrow selection
+nnoremap <leader>nn :NR!<CR>
+vnoremap <leader>nn :NR!<CR>
+" open last visual selected
+nnoremap <leader>nv :NRV!<CR>
+" load line to prepare multi open
+vnoremap <leader>np :NRP<CR>
+" clear prepared lines
+nnoremap <leader>nc :NRP!<CR>
+" unload prepared line
+nnoremap <leader>nu :NRU<CR>
+" open all prepared lines
+nnoremap <leader>nm :NRM!<CR>
+" open last narrowed selection
+nnoremap <leader>nl :NRL!<CR>
 " ==================================================== }}}
 
 " ================ illuminate ======================== {{{
@@ -504,7 +524,6 @@ nnoremap <F2> :LuaTreeToggle<CR>
 " ms-jpq/chadtree
 
 " nnoremap <F2> <cmd>CHADopen<cr>
-
 " ==================================================== }}}
 
 " ================= Vista ============================ {{{
@@ -550,7 +569,7 @@ command! -bang Commands
 
 command! FZFSearchProject call fzf#run(fzf#wrap({
 \   'source': 'bash -c "'.
-\             'fd -H -d 3 -t d "^.git$" ~/work ~/code -x echo {//}'.
+\             'fd -H -d 3 -t d "^.git$" '.join(s:project_directories, ' ').' -x echo {//}'.
 \              '"',
 \   'sink' : 'cd',
 \   'options' : "--preview",
@@ -600,6 +619,7 @@ function! Fzf_dev()
 endfunction
 command! ListFiles execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
 nnoremap <Space>ff :ListFiles<CR>
+nnoremap <Space>sf :ListFiles<CR>
 nnoremap <silent> <Space>sp :FZFSearchProject<CR>
 nnoremap <silent> <Space>sd :Rg<CR>
 nnoremap <silent> <Space>sl :BLines<CR>
@@ -608,7 +628,6 @@ nnoremap <silent> <Space>sb :Buffers<CR>
 nnoremap <silent> <Space>bb :Buffers<CR>
 nnoremap <silent> <Space>fh :History<CR>
 nnoremap <silent> <Space>tc :Colors<CR>
-" nnoremap <silent> <Space>fa :Rg<CR>
 nnoremap <silent> <Space>fb :Marks<CR>
 nnoremap <silent> <F1>      :Helptags<CR>
 
@@ -764,7 +783,7 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " ================= Neoformat ======================== {{{
 " sbdchd/neoformat
-nnoremap = :Neoformat<CR>
+nnoremap <Leader>b= <cmd>Neoformat<CR>
 " ==================================================== }}}
 
 " ================= UltiSnips ======================== {{{
@@ -786,13 +805,13 @@ nnoremap <F4> :MundoToggle<CR>
 let g:mundo_right = 1
 " ==================================================== }}}
 
-" ================= Themes/Colorschemes ============== {{{
+" ================= Colorschemes/Themes ============== {{{
 if (has("termguicolors"))
   set termguicolors
 endif
 
-let ayucolor="mirage"
-colorscheme ayu
+" let ayucolor="mirage"
+" colorscheme ayu
 
 " set t_Co=256
 
@@ -819,6 +838,8 @@ colorscheme ayu
 " colo gotham256
 " colo dracula
 " colo blue-moon
+set background=light
+colo PaperColor
 
 " colo embark
 " let g:embark_terminal_italics = 1
@@ -845,7 +866,7 @@ colorscheme ayu
 " Remove ~ chars from end of file (set after colorscheme set)
 highlight NonText guifg=bg
 " comments should be italic
-highlight Comment cterm=italic gui=italic
+" highlight Comment cterm=italic gui=italic
 " ==================================================== }}}
 
 " ================= Airline ========================== {{{
@@ -890,7 +911,7 @@ let g:lightline#bufferline#clickable = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'ayu'
+let g:lightline.colorscheme = 'PaperColor'
 let g:lightline.mode_map = {
     \   'n' : 'N',
     \   'i' : 'I',
@@ -1046,7 +1067,7 @@ let g:startify_lists = [
 " \   { 'header': [ '    Recent Commits'   ], 'type': function('s:list_commits'),  },
 
 let g:startify_bookmarks = [
-\   { 'v': '~/.config/nvim/init.vim' },
+\   { 'v': $MYVIMRC },
 \   { 'a': '~/.config/alacritty/alacritty.yml' },
 \   { 'r': '~/.config/karabiner/karabiner.json' },
 \   { 'z': '~/.zshrc' },
@@ -1138,7 +1159,7 @@ let g:vimade_running = 0
 " ================= WakaTime ========================= {{{
 " wakatime/vim-wakatime
 
-let g:wakatime_PythonBinary='/usr/local/bin/python3'
+" let g:wakatime_PythonBinary='/usr/local/bin/python3'
 " ====================================================== }}}
 
 " ================= indentLine ======================= {{{
@@ -1354,7 +1375,10 @@ let g:which_key_map =  {}
 let g:which_key_map.f = { 'name' : '+Files' }
 
 let g:which_key_map.f.s = 'save-file'
-let g:which_key_map.f.d = 'open-vimrc'
+let g:which_key_map.f.h = 'recent'
+let g:which_key_map.f.f = 'open file'
+let g:which_key_map.f.b = 'bookmarks'
+let g:which_key_map.f.v = ['e $MYVIMRC', 'vimrc']
 
 " Buffer maps
 let g:which_key_map.b   = { 'name' : '+Buffers' }
@@ -1379,55 +1403,42 @@ let g:which_key_map.b.8 = ['<Plug>lightline#bufferline#go(8)' , 'which_key_ignor
 let g:which_key_map.b.9 = ['<Plug>lightline#bufferline#go(9)' , 'which_key_ignore']
 
 " Project maps
-let g:which_key_map.p   = { 'name' : '+Projects' }
-
+" let g:which_key_map.p   = { 'name' : '+Projects' }
 " let g:which_key_map.p.p = ['Buffers'   , 'fzf-buffer']
 
 let g:which_key_map.s = { 'name' : '+Search' }
-
-let g:which_key_map.s.b = ['Gblame'    , 'Git Blame']
+let g:which_key_map.s.p = 'projects'
+let g:which_key_map.s.f = 'files in directory'
+let g:which_key_map.s.d = 'lines in directory'
+let g:which_key_map.s.l = 'lines in current buffer'
+let g:which_key_map.s.L = 'lines in open buffers'
+let g:which_key_map.s.b = 'buffers'
 
 " let g:which_key_map.a = { 'name' : '+Applications' }
-let g:which_key_map.e = { 'name' : '+Errors' }
+" let g:which_key_map.e = { 'name' : '+Errors' }
 
-let g:which_key_map.g = { 'name' : '+Git' }
-let g:which_key_map.g.b = ['Gblame'    , 'Git Blame']
-let g:which_key_map.g.s = ['Gstatus'   , 'Git Status']
-" let g:which_key_map.g.b = ['Gdiffsplit', 'git-blame']
-" let g:which_key_map.g.b = ['GBlame'    , 'git-blame']
-" let g:which_key_map.g.b = ['GBlame'    , 'git-blame']
-" let g:which_key_map.g.b = ['GBlame'    , 'git-blame']
-" let g:which_key_map.g.b = ['GBlame'    , 'git-blame']
+let g:which_key_map.g   = { 'name' : '+Git' }
+let g:which_key_map.g.b = ['Gblame'    , 'blame']
+let g:which_key_map.g.s = ['Gstatus'   , 'git status']
+let g:which_key_map.g.a = ['GitGutterStageHunk', 'stage hunk']
+let g:which_key_map.g.p = ['GitGutterPreviewHunk', 'preview hunk']
+let g:which_key_map.g.u = ['GitGutterUndoHunk', 'undo hunk']
 
 let g:which_key_map.n = { 'name' : '+Narrow' }
 
-let g:which_key_map.n.n = ['NR!'       , 'narrow-visual']
-" open visually selected
-vnoremap <leader>nn :NR!<CR>
-" open last visual selected
-nnoremap <leader>nv :NRV!<CR>
-" load line to prepare multi open
-vnoremap <leader>np :NRP<CR>
-" clear prepared lines
-nnoremap <leader>nc :NRP!<CR>
-" unload prepared line
-nnoremap <leader>nu :NRU<CR>
-" open all prepared lines
-nnoremap <leader>nm :NRM!<CR>
-" open last narrowed selection
-nnoremap <leader>nl :NRL!<CR>
-let g:which_key_map.t = { 'name' : '+Toggles' }
-" let g:which_key_map.w = { 'name' : '+Windows' }
-let g:which_key_map.t = { 'name' : '+Text' }
+let g:which_key_map.n.n = 'narrow-visual'
+
+let g:which_key_map.l = { 'name' : '+Language' }
+let g:which_key_map.l.f = 'format' " move to language section
 
 " TODO: change this
-nnoremap <silent> <leader>oq  :copen<CR>
-nnoremap <silent> <leader>ol  :lopen<CR>
-let g:which_key_map.o = {
-    \ 'name' : '+open',
-    \ 'q' : 'open-quickfix'    ,
-    \ 'l' : 'open-locationlist',
-    \ }
+" nnoremap <silent> <leader>oq  :copen<CR>
+" nnoremap <silent> <leader>ol  :lopen<CR>
+" let g:which_key_map.o = {
+"     \ 'name' : '+open',
+"     \ 'q' : 'open-quickfix'    ,
+"     \ 'l' : 'open-locationlist',
+"     \ }
 " ====================================================== }}}
 
 " Statusline
