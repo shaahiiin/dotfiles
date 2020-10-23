@@ -1,7 +1,8 @@
 " ================ Vim config ========================
 "
 " TODO: join all mappings into one place
-
+filetype plugin indent on
+syntax enable
 " For python / ruby plugin
 let g:loaded_python_provider = 0
 let g:python3_host_prog='/usr/local/bin/python3'
@@ -51,8 +52,8 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 " ================ Appearance ======================== {{{
 Plug 'itchyny/lightline.vim'                                  " status line
 " Plug 'ryanoasis/vim-devicons'                                 " support file icons, etc
-" Plug 'RRethy/vim-illuminate'                                  " highlight word under cursor (like vscode)
-" Plug 'junegunn/goyo.vim'                                      " remove distractions
+Plug 'RRethy/vim-illuminate'                                  " highlight word under cursor (like vscode)
+Plug 'junegunn/goyo.vim'                                      " remove distractions
 " Plug 'TaDaa/vimade'                                           " fade inactive windows
 " Plug 'DanilaMihailov/beacon.nvim'                             " ping cursor location after every jump
 " ==================================================== }}}
@@ -60,29 +61,34 @@ Plug 'itchyny/lightline.vim'                                  " status line
 " ================ Language ========================== {{{
 " Plug 'peitalin/vim-jsx-typescript'                            " tsx syntax highlighting
 " Plug 'leafgarland/typescript-vim'                             " typescript syntax highlighting
-Plug 'HerringtonDarkholme/yats.vim'                           " typescript syntax file (dependency for below)
+" Plug 'HerringtonDarkholme/yats.vim'                           " typescript syntax file (dependency for below)
 " Plug 'mhartington/nvim-typescript', {'do': ':!install.sh \| UpdateRemotePlugins'}
 Plug 'vim-python/python-syntax', { 'for': 'python' }          " python syntax highlighting
 " Plug 'python-mode/python-mode',{ 'branch': 'develop' }        " python support - NOT WORKING
-Plug 'neoclide/coc.nvim', {'branch': 'release'}               " completion engine
-Plug 'sbdchd/neoformat'                                       " code formatter
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}               " completion engine
+Plug 'sbdchd/neoformat'                                       " code formatter TODO: replace with inbuilt
 " LSP
 " Plug 'neovim/nvim-lspconfig'
 " Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/diagnostic-nvim'
 " Plug 'nvim-lua/lsp-status.nvim'
+" TreeSitter
+" Plug 'nvim-treesitter/nvim-treesitter'
 " ==================================================== }}}
 
 " ================ Utility / Tools =================== {{{
 Plug 'tpope/vim-fugitive'                                     " git wrapper
 " Plug 'lambdalisue/gina.vim'                                   " git wrapper
+" Plug 'mhinz/vim-signify'                                      " git gutter related info
 Plug 'airblade/vim-gitgutter'                                 " show git diff in gutter
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'           " fuzzy search tool (cmd line tool - installed with homebrew)
-" Plug 'tpope/vim-dadbod'                                       " db conn with vim
+" Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }  " grep helper
+Plug 'tpope/vim-dadbod'                                       " db conn with vim
+Plug 'kristijanhusak/vim-dadbod-ui'                           " dadbod ui
 " Plug 'psliwka/vim-smoothie'                                   " Smooth scrolling
 Plug 'takac/vim-hardtime'                                     " add delay on hjkl keys (easier hardmode)
 " Plug 'tpope/vim-obsession'                                    " Easy vim session
-Plug 'mhinz/vim-startify'                                     " custom start screen, session management
+" Plug 'mhinz/vim-startify'                                     " custom start screen, session management
 " Plug 'hardcoreplayers/dashboard-nvim'                         " vim dashboard
 Plug 'chrisbra/NrrwRgn'                                       " narrow region like emacs
 Plug 'AndrewRadev/linediff.vim'                               " narrow region two blocks of code
@@ -150,6 +156,8 @@ set showcmd             " Show incomplete cmds down the bottom
 set noshowmode          " Do not show current mode (statusline handles it)
 set lazyredraw          " redraw only when we need to
 set wrap
+set updatetime=100      " update sign col (default 4000 is too long)
+set conceallevel=0      " no conceal
 
 if (has('nvim'))
     set pumblend=20         " transparency in pop-up menu
@@ -163,7 +171,7 @@ set wildmenu
 set wildmode=longest:full,full
 set wildoptions=pum
 set wildignorecase      " ignore case for filename completions (cmd mode)
-set smartcase           " if search string contains uppercase, switch to case sensitive search
+" set smartcase           " if search string contains uppercase, switch to case sensitive search
 set nohlsearch          " don't highlight search results
 set incsearch           " set incremental search, like modern browsers
 set magic               " Set magic on, for regex (avoid lot of backslash escapes)
@@ -180,7 +188,7 @@ set hidden              " allow multiple buffers to be loaded
 
 " Restore last cursor position and marks on open
 au BufReadPost *
-\ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' 
+\ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit'
 \ |   exe "normal! g`\""
 \ | endif
 " }}}
@@ -240,8 +248,8 @@ inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
 
 " Close current buffer (safely)
-" nnoremap q :confirm bd<CR>
-nnoremap Q :confirm qa<CR>
+nnoremap q :confirm bd<CR>
+nnoremap Q <cmd>confirm qa<CR>
 " nnoremap <C-q> :confirm :q<CR> " Doesn't work in windows
 " TODO: figure out how to fix <C-v> in windows
 
@@ -263,14 +271,6 @@ nnoremap <expr> 0 getline('.')[: col('.') - 2] =~ '^\s*$' ? '0' : '0^'
 
 " nnoremap : ;
 " vnoremap : ;
-
-nnoremap H ^
-vnoremap H ^
-onoremap H ^
-
-nnoremap L $
-vnoremap L $
-onoremap L $
 
 " TODO: try these bindings
 " nnoremap x "_x
@@ -352,21 +352,23 @@ nnoremap <F6> :let $VIM_DIR=expand('%:p:h')<CR>:vs\|:te<CR>cd $VIM_DIR<CR>
 
 " Quickfix " TODO: add stuff
 " Open the quickfix window
-nnoremap <Leader>qo <cmd>copen<CR>                  
+nnoremap <Leader>qo <cmd>copen<CR>
 " Close it
-nnoremap <Leader>qc <cmd>cclose<CR>                 
+nnoremap <Leader>qc <cmd>cclose<CR>
 " Open it if there are 'errors', close it otherwise (some people prefer this)
-nnoremap <Leader>qw <cmd>cwindow<CR>                
+nnoremap <Leader>qw <cmd>cwindow<CR>
 " Go to the next error in the window
-nnoremap <Leader>qn <cmd>cnext<CR>                  
+nnoremap <Leader>qn <cmd>cnext<CR>
+nnoremap <F4>       <cmd>cnext<CR>
 " Go to the previous error in the window
-nnoremap <Leader>qp <cmd>cprevious<CR>              
+nnoremap <Leader>qp <cmd>cprevious<CR>
+nnoremap <S-F4>     <cmd>cprevious<CR>
 " Go to the first error in the next file
-nnoremap <Leader>qN <cmd>cnfile<CR>                 
+nnoremap <Leader>qN <cmd>cnfile<CR>
 " Go to the last error in the prev file
-nnoremap <Leader>qP <cmd>cpfile<CR>                 
+nnoremap <Leader>qP <cmd>cpfile<CR>
 " Go to error under cursor (if cursor is in quickfix window)
-nnoremap <Leader>q. <cmd>.cc<CR>                    
+nnoremap <Leader>q. <cmd>.cc<CR>
 
 " ==================================================== }}}
 
@@ -420,25 +422,25 @@ let g:nrrw_rgn_nomap_Nr = 1
 
 " All maps will use buffers instead of windows
 " narrow selection
-nnoremap <leader>nn :NR!<CR>
-vnoremap <leader>nn :NR!<CR>
+nnoremap <leader>nn :NR<CR>
+vnoremap <leader>nn :NR<CR>
 " open last visual selected
-nnoremap <leader>nv :NRV!<CR>
+nnoremap <leader>nv :NRV<CR>
 " load line to prepare multi open
 vnoremap <leader>np :NRP<CR>
 " clear prepared lines
-nnoremap <leader>nc :NRP!<CR>
+nnoremap <leader>nc :NRP<CR>
 " unload prepared line
 nnoremap <leader>nu :NRU<CR>
 " open all prepared lines
-nnoremap <leader>nm :NRM!<CR>
+nnoremap <leader>nm :NRM<CR>
 " open last narrowed selection
-nnoremap <leader>nl :NRL!<CR>
+nnoremap <leader>nl :NRL<CR>
 " ==================================================== }}}
 
 " ================ illuminate ======================== {{{
 " RRethy/vim-illuminate
-" let g:Illuminate_ftblacklist = ['nerdtree', 'dashboard', '__vista__']
+let g:Illuminate_ftblacklist = ['CHADTree', 'startify', 'dashboard', 'vista', 'qf']
 " let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python']
 " ==================================================== }}}
 
@@ -522,12 +524,12 @@ nnoremap <leader>nl :NRL!<CR>
 " ================= CHADTree ========================= {{{
 " ms-jpq/chadtree
 
-nnoremap <F2> <cmd>CHADopen<cr>
+" nnoremap <F2> <cmd>CHADopen<cr>
 " ==================================================== }}}
 
 " ================= Vista ============================ {{{
 " liuchengxu/vista.vim
-nnoremap <F3> :Vista!!<CR>
+" nnoremap <F3> :Vista!!<CR>
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_default_executive = 'ctags'
 let g:vista#renderer#enable_icon = 1
@@ -591,10 +593,30 @@ nnoremap <silent> <leader>i :call Fzf_dev()<CR>
 " TODO: use this and do something....
 " ripgrep
 if executable('rg')
-  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+    let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+    set grepprg=rg\ --vimgrep\ -g\ \!web/reducers/api/auto.ts\ -g\ \!api/src/swagger.json\ -g\ \!api/src/routes.ts
+    set grepformat^=%f:%l:%c:%m
+
+    function! Grep(...)
+        return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
+    endfunction
+
+    command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>)
+    command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
+
+    cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
+    cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
+
+    augroup quickfix
+        autocmd!
+        autocmd QuickFixCmdPost cgetexpr cwindow
+        autocmd QuickFixCmdPost lgetexpr lwindow
+    augroup END
+
+    command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 endif
+
+nnoremap K :Grep <C-R><C-W><CR>:cw<CR>
 
 command! ListFiles execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
 nnoremap <silent> <Leader>ff <cmd>ListFiles<CR>
@@ -754,9 +776,24 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " autocmd FileType json syntax match Comment +\/\/.\+$+
 " " ==================================================== }}}
 
+" Signify {{{
+" nnoremap <leader>gD <cmd>SignifyDiff<cr>
+" nnoremap <leader>gd <cmd>SignifyHunkDiff<cr>
+" nnoremap <leader>gu <cmd>SignifyHunkUndo<cr>
+
+" " hunk jumping
+" nmap <leader>gj <plug>(signify-next-hunk)
+" nmap <leader>gk <plug>(signify-prev-hunk)
+
+" " hunk text object
+" omap ic <plug>(signify-motion-inner-pending)
+" xmap ic <plug>(signify-motion-inner-visual)
+" omap ac <plug>(signify-motion-outer-pending)
+" xmap ac <plug>(signify-motion-outer-visual)
+" }}}
+
 " ================= GitGutter ======================== {{{
-" nnoremap ]h :GitGutterNextHunk<CR>
-" nnoremap [h :GitGutterPrevHunk<CR>
+
 " ==================================================== }}}
 
 " ================= Neoformat ======================== {{{
@@ -779,7 +816,7 @@ nnoremap <Leader>b= <cmd>Neoformat<CR>
 " ================= Mundo ============================ {{{
 " simnalamburt/vim-mundo
 
-nnoremap <F4> :MundoToggle<CR>
+" nnoremap <F4> :MundoToggle<CR>
 let g:mundo_right = 1
 " ==================================================== }}}
 
@@ -787,9 +824,6 @@ let g:mundo_right = 1
 if (has("termguicolors"))
   set termguicolors
 endif
-
-" let ayucolor="mirage"
-" colorscheme ayu
 
 " set t_Co=256
 
@@ -814,10 +848,13 @@ endif
 " colo iceberg
 " colo nord
 " colo gotham256
-colo dracula
+" colo dracula
 " colo blue-moon
 " set background=dark
 " colo gruvbox
+
+" let ayucolor="mirage"
+colo ayu
 
 " colo embark
 " let g:embark_terminal_italics = 1
@@ -889,7 +926,7 @@ let g:lightline#bufferline#clickable = 1
 let g:lightline#bufferline#filename_modifier = ':t'
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'dracula'
+let g:lightline.colorscheme = 'ayu'
 let g:lightline.mode_map = {
     \   'n' : 'N',
     \   'i' : 'I',
@@ -936,7 +973,7 @@ let g:lightline.separator = {
     \   'left': '', 'right': ''
     \ }
 let g:lightline.subseparator = {
-    \   'left': '', 'right': '' 
+    \   'left': '', 'right': ''
     \ }
 
 function! LightlineFugitive()
@@ -973,7 +1010,7 @@ endfunction
 " ==================================================== }}}
 
 " ================= HardTime ========================= {{{
-let g:hardtime_default_on = 1
+let g:hardtime_default_on = 0
 let g:hardtime_timeout = 1000
 " let g:hardtime_showmsg = 1
 " ==================================================== }}}
@@ -1023,9 +1060,9 @@ let s:footer_string = "Loaded ".len(keys(g:plugs))." plugins"
 let g:startify_custom_footer = 'map(startify#fortune#boxed(["Loaded ".len(keys(g:plugs))." plugins"]), "\"   \".v:val")'
 
 " Format the entries
-function! StartifyEntryFormat()
-    return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
-endfunction
+" function! StartifyEntryFormat()
+"     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+" endfunction
 
 " List git commits
 function! s:list_commits()
@@ -1105,7 +1142,6 @@ endfunction
 function! BOOK_MARKS()
     Marks
 endfunction
-
 let g:dashboard_custom_header = [
     \ '',
     \ '   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠞⠉⢉⣭⣿⣿⠿⣳⣤⠴⠖⠛⣛⣿⣿⡷⠖⣶⣤⡀⠀⠀⠀   ',
@@ -1130,7 +1166,7 @@ let g:dashboard_custom_header = [
 " ====================================================== }}}
 
 " ================= Vimade =========================== {{{
-" 'TaDaa/vimade'                                           
+" 'TaDaa/vimade'
 " let g:vimade_running = 0
 " ====================================================== }}}
 
@@ -1143,10 +1179,10 @@ let g:dashboard_custom_header = [
 " ================= indentLine ======================= {{{
 " Yggdroot/indentLine
 
-" let g:indentLine_char = '▏'
-let g:indentLine_char = '┊'
-let g:indentLine_first_char = '┊'
-let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_char = '▏'
+" let g:indentLine_char = '┊'
+" let g:indentLine_first_char = '┊'
+" let g:indentLine_showFirstIndentLevel = 1
 " let g:indentLine_setColors = 0
 " ==================================================== }}}
 
@@ -1165,6 +1201,18 @@ let g:indentLine_showFirstIndentLevel = 1
 
 " ==================================================== }}}
 
+" nvim-treesitter {{{
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   ensure_installed = { "typescript", "tsx" },     -- one of "all", "language", or a list of languages
+"   highlight = {
+"     enable = true,              -- false will disable the whole extension
+"     disable = { "c", "rust" },  -- list of language that will be disabled
+"   },
+" }
+" EOF
+" }}}
+
 " nvim-lsp {{{
 
 " lua <<EOF
@@ -1177,9 +1225,9 @@ let g:indentLine_showFirstIndentLevel = 1
 " EOF
 
 " " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.definition()<CR>
 " nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.implementation()<CR>
 " nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 " nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 " nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
@@ -1286,14 +1334,15 @@ let g:indentLine_showFirstIndentLevel = 1
 " smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
 
 " Expand or jump (or trigger completion)
-imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : pumvisible() ? "\<C-n>" : completion#trigger_completion()
-smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
+" imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : pumvisible() ? "\<C-n>" : completion#trigger_completion()
+" smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>'
 
 " Jump forward or backward
 " imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
 " smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : pumvisible() ? "\<C-p>" : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : pumvisible() ? "\<C-p>" : '<S-Tab>'
+
+" imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : pumvisible() ? "\<C-p>" : '<S-Tab>'
+" smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : pumvisible() ? "\<C-p>" : '<S-Tab>'
 
 " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
 " See https://github.com/hrsh7th/vim-vsnip/pull/50
@@ -1305,9 +1354,9 @@ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : pumvi
 " smap        S   <Plug>(vsnip-cut-text)
 
 " If you want to use snippet for multiple filetypes, you can `g:vsip_filetypes` for it.
-let g:vsnip_filetypes = {}
-let g:vsnip_filetypes.javascriptreact = ['javascript']
-let g:vsnip_filetypes.typescriptreact = ['typescript']
+" let g:vsnip_filetypes = {}
+" let g:vsnip_filetypes.javascriptreact = ['javascript']
+" let g:vsnip_filetypes.typescriptreact = ['typescript']
 " }}}
 
 " ================= Vim-which-key ==================== {{{
@@ -1322,55 +1371,60 @@ let g:which_key_map =  {}
 " Mappings
 " =======================================================
 
-" File maps
+" Files maps {{{
 let g:which_key_map.f = { 'name' : '+Files' }
 
 let g:which_key_map.f.s = 'save-file'
 let g:which_key_map.f.h = 'recent'
 let g:which_key_map.f.f = 'open file'
 let g:which_key_map.f.b = 'bookmarks'
-let g:which_key_map.f.v = ['e $MYVIMRC', 'vimrc']
+let g:which_key_map.f.v = 'open vimrc'
+" }}}
 
-" Buffer maps
-let g:which_key_map.b   = { 'name' : '+Buffers' }
+" Buffer maps {{{
+" let g:which_key_map.b   = { 'name' : '+Buffers' }
 
-let g:which_key_map.b.b = ['Buffers'   , 'search']
-let g:which_key_map.b.d = ['bd'        , 'delete']
-let g:which_key_map.b.f = ['bfirst'    , 'first']
-let g:which_key_map.b.h = ['Startify'  , 'home/dashboard']
-let g:which_key_map.b.l = ['blast'     , 'last']
-let g:which_key_map.b.n = ['bnext'     , 'next']
-let g:which_key_map.b.p = ['bprevious' , 'previous']
-let g:which_key_map.b.c = 'clear empty buffers'
+" let g:which_key_map.b.b = ['Buffers'   , 'search']
+" let g:which_key_map.b.d = ['bd'        , 'delete']
+" let g:which_key_map.b.f = ['bfirst'    , 'first']
+" let g:which_key_map.b.h = ['Startify'  , 'home/dashboard']
+" let g:which_key_map.b.l = ['blast'     , 'last']
+" let g:which_key_map.b.n = ['bnext'     , 'next']
+" let g:which_key_map.b.p = ['bprevious' , 'previous']
+" let g:which_key_map.b.c = 'clear empty buffers'
+" }}}
 
 " Project maps
 " let g:which_key_map.p   = { 'name' : '+Projects' }
 
-let g:which_key_map.s = { 'name' : '+Search' }
-let g:which_key_map.s.p = 'projects'
-let g:which_key_map.s.f = 'files in directory'
-let g:which_key_map.s.d = 'lines in directory'
-let g:which_key_map.s.l = 'lines in current buffer'
-let g:which_key_map.s.L = 'lines in open buffers'
-let g:which_key_map.s.b = 'buffers'
+" Search related {{{
+" let g:which_key_map.s = { 'name' : '+Search' }
+" let g:which_key_map.s.p = 'projects'
+" let g:which_key_map.s.f = 'files in directory'
+" let g:which_key_map.s.d = 'lines in directory'
+" let g:which_key_map.s.l = 'lines in current buffer'
+" let g:which_key_map.s.L = 'lines in open buffers'
+" let g:which_key_map.s.b = 'buffers'
+" }}}
 
 " let g:which_key_map.a = { 'name' : '+Applications' }
 " let g:which_key_map.e = { 'name' : '+Errors' }
 
+" Git related maps {{{
 let g:which_key_map.g   = { 'name' : '+Git' }
-let g:which_key_map.g.b = ['Gblame'    , 'Show blame']
-let g:which_key_map.g.s = ['Gstatus'   , 'Show status']
-let g:which_key_map.g.a = ['GitGutterStageHunk', 'Stage hunk']
+let g:which_key_map.g.b = ['Gblame'              , 'Show blame']
+let g:which_key_map.g.s = ['Gstatus'             , 'Show status']
+let g:which_key_map.g.a = ['GitGutterStageHunk'  , 'Stage hunk']
 let g:which_key_map.g.p = ['GitGutterPreviewHunk', 'Preview hunk']
-let g:which_key_map.g.u = ['GitGutterUndoHunk', 'Undo hunk']
+let g:which_key_map.g.u = ['GitGutterUndoHunk'   , 'Undo hunk']
+" }}}
 
 let g:which_key_map.n = { 'name' : '+Narrow' }
-
 let g:which_key_map.n.n = 'narrow-visual'
 
-let g:which_key_map.l = { 'name' : '+Language' }
 " move to language section
-let g:which_key_map.l.f = 'format'
+" let g:which_key_map.l = { 'name' : '+Language' }
+" let g:which_key_map.l.f = 'format'
 
 " TODO: change this
 " nnoremap <silent> <leader>oq  :copen<CR>
