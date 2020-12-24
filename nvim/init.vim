@@ -7,7 +7,7 @@ syntax enable
 let g:loaded_python_provider = 0
 let g:python3_host_prog='/usr/local/bin/python3'
 let g:ruby_host_prog='/usr/bin/ruby'
-let s:project_directories=['~/work', '~/code']
+" let s:project_directories=['~/work', '~/code']
 
 let g:vsnip_snippet_dir = '~/.config/vsnip'
 
@@ -15,27 +15,28 @@ let g:vsnip_snippet_dir = '~/.config/vsnip'
 call plug#begin('~/.local/share/nvim/plugged')
 
 " ================ Operators / Editing =============== {{{
-Plug 'tpope/vim-commentary'                                   " easy commenting
+Plug 'tpope/vim-commentary'                                   " commenting
 Plug 'tpope/vim-surround'                                     " quoting/parenthesizing
 Plug 'tommcdo/vim-lion'                                       " aligning text around a char
 " ==================================================== }}}
 
 " ================ Motions =========================== {{{
+Plug 'rhysd/clever-f.vim'
 " ==================================================== }}}
 
 " ================ Code structure ==================== {{{
 Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins', 'on': 'CHADOpen'} " file explorer
 " Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'kyazdani42/nvim-tree.lua'
-Plug 'liuchengxu/vista.vim'                                   " view tags and LSP symbols
+Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                " view tags and LSP symbols
 " Plug 'kshenoy/vim-signature'                                  " better management of marks
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }              " python fold support
+" Plug 'tmhedberg/SimpylFold', { 'for': 'python' }              " python fold support
 Plug 'Yggdroot/indentLine'                                    " indent lines
 " ==================================================== }}}
 
 " ================ Colorschemes/Themes =============== {{{
 Plug 'ayu-theme/ayu-vim'
-Plug 'whatyouhide/vim-gotham'
+" Plug 'whatyouhide/vim-gotham'
 " Plug 'danilo-augusto/vim-afterglow'
 " Plug 'mhartington/oceanic-next'
 Plug 'gruvbox-community/gruvbox'
@@ -47,15 +48,23 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'liuchengxu/space-vim-dark'
 " Plug 'Badacadabra/vim-archery'
 " Plug 'kyazdani42/blue-moon'
+Plug 'ghifarit53/tokyonight-vim'
+" Plug 'vigoux/oak'
+" Plug 'alexanderjeurissen/lumiere.vim'
+" Plug 'foxbunny/vim-amber'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'glepnir/zephyr-nvim'
 " ==================================================== }}}
 
 " ================ Appearance ======================== {{{
 Plug 'itchyny/lightline.vim'                                  " status line
 " Plug 'ryanoasis/vim-devicons'                                 " support file icons, etc
 Plug 'RRethy/vim-illuminate'                                  " highlight word under cursor (like vscode)
-Plug 'junegunn/goyo.vim'                                      " remove distractions
+" Plug 'junegunn/goyo.vim'                                      " zen mode
 " Plug 'TaDaa/vimade'                                           " fade inactive windows
 " Plug 'DanilaMihailov/beacon.nvim'                             " ping cursor location after every jump
+" Plug 'Xuyuanp/scrollbar.nvim'                                 " scrollbar (disabled since this is based on cursor pos)
+Plug 'wfxr/minimap.vim'
 " ==================================================== }}}
 
 " ================ Language ========================== {{{
@@ -63,35 +72,46 @@ Plug 'junegunn/goyo.vim'                                      " remove distracti
 " Plug 'leafgarland/typescript-vim'                             " typescript syntax highlighting
 " Plug 'HerringtonDarkholme/yats.vim'                           " typescript syntax file (dependency for below)
 " Plug 'mhartington/nvim-typescript', {'do': ':!install.sh \| UpdateRemotePlugins'}
-Plug 'vim-python/python-syntax', { 'for': 'python' }          " python syntax highlighting
-" Plug 'python-mode/python-mode',{ 'branch': 'develop' }        " python support - NOT WORKING
+" Plug 'vim-python/python-syntax', { 'for': 'python' }          " python syntax highlighting
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}               " completion engine
-Plug 'sbdchd/neoformat'                                       " code formatter TODO: replace with inbuilt
+Plug 'sbdchd/neoformat'                                       " code formatter TODO: replace with inbuilt (formatprg)
 " LSP
-" Plug 'neovim/nvim-lspconfig'
-" Plug 'nvim-lua/completion-nvim'
-" Plug 'nvim-lua/diagnostic-nvim'
-" Plug 'nvim-lua/lsp-status.nvim'
-" TreeSitter
-" Plug 'nvim-treesitter/nvim-treesitter'
+if has('nvim-0.5')
+    " Completions (for lsp)
+    Plug 'nvim-lua/completion-nvim'
+    " LSP
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/lsp-status.nvim'
+    Plug 'ojroques/nvim-lspfuzzy', {'branch': 'main'}
+    " TreeSitter
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    " Plug 'romgrk/nvim-treesitter-context'
+    " " causing 'cannot close last window' bug
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
+
+    " Telescope (fuzzy finder)
+    " Plug 'nvim-lua/popup.nvim'
+    " Plug 'nvim-lua/plenary.nvim'
+    " Plug 'nvim-telescope/telescope.nvim'
+endif
 " ==================================================== }}}
 
 " ================ Utility / Tools =================== {{{
 Plug 'tpope/vim-fugitive'                                     " git wrapper
-" Plug 'lambdalisue/gina.vim'                                   " git wrapper
+Plug 'airblade/vim-gitgutter'                                 " git info in sign column + add hunk text object
 " Plug 'mhinz/vim-signify'                                      " git gutter related info
-Plug 'airblade/vim-gitgutter'                                 " show git diff in gutter
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'           " fuzzy search tool (cmd line tool - installed with homebrew)
 " Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }  " grep helper
 Plug 'tpope/vim-dadbod'                                       " db conn with vim
 Plug 'kristijanhusak/vim-dadbod-ui'                           " dadbod ui
 " Plug 'psliwka/vim-smoothie'                                   " Smooth scrolling
 Plug 'takac/vim-hardtime'                                     " add delay on hjkl keys (easier hardmode)
-" Plug 'tpope/vim-obsession'                                    " Easy vim session
+" Plug 'tpope/vim-obsession'                                    " Easier vim session management
 " Plug 'mhinz/vim-startify'                                     " custom start screen, session management
-" Plug 'hardcoreplayers/dashboard-nvim'                         " vim dashboard
+" Plug 'hardcoreplayers/dashboard-nvim'                         " custom start screen (like doom emacs)
 Plug 'chrisbra/NrrwRgn'                                       " narrow region like emacs
-Plug 'AndrewRadev/linediff.vim'                               " narrow region two blocks of code
+Plug 'AndrewRadev/linediff.vim'                               " narrow two blocks of text for diffing (use narrow region itself?)
 " Plug 'gioele/vim-autoswap'                                    " Smartly deal with swap files
 " Plug 'thaerkh/vim-workspace'                                  " Manage sessions in workspaces
 " Plug 'honza/vim-snippets'                                     " Snippet files repository
@@ -102,7 +122,7 @@ Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'simnalamburt/vim-mundo', {'on': 'MundoToggle'}          " undo tree plugin
 Plug 'liuchengxu/vim-which-key',{'on': ['WhichKey', 'WhichKey!']} " interactively show mappings
 Plug 'justinmk/vim-dirvish'                                   " browse directory / files
-" Plug 'lfv89/vim-interestingwords'                             " highlight different words throughout the buffer
+" Plug 'lfv89/vim-interestingwords'                             " persist word highlight
 Plug 'airblade/vim-rooter'                                    " change pwd to project root if exists
 Plug 'mhinz/vim-sayonara', { 'on': ['Sayonara', 'Sayonara!']}               " simplify closing buffers / windows
 " ==================================================== }}}
@@ -137,6 +157,7 @@ au FileType python
     \ setlocal expandtab |
     \ setlocal autoindent |
     \ setlocal fileformat=unix |
+    " \ setlocal foldmethod=indent |
 
 set clipboard+=unnamedplus   " share system clipboard with vim register
 if (has('mouse'))
@@ -156,7 +177,7 @@ set showcmd             " Show incomplete cmds down the bottom
 set noshowmode          " Do not show current mode (statusline handles it)
 set lazyredraw          " redraw only when we need to
 set wrap
-set updatetime=100      " update sign col (default 4000 is too long)
+set updatetime=100      " update sign col (default 4000 is too long) - also controls swap file write delay
 set conceallevel=0      " no conceal
 
 if (has('nvim'))
@@ -166,7 +187,7 @@ endif
 " }}}
 
 " Searching {{{
-set ignorecase          " ignore case for search
+set ignorecase          " ignore case in command mode
 set wildmenu
 set wildmode=longest:full,full
 set wildoptions=pum
@@ -174,17 +195,16 @@ set wildignorecase      " ignore case for filename completions (cmd mode)
 " set smartcase           " if search string contains uppercase, switch to case sensitive search
 set nohlsearch          " don't highlight search results
 set incsearch           " set incremental search, like modern browsers
-set magic               " Set magic on, for regex (avoid lot of backslash escapes)
 if (has('nvim'))
     set inccommand=nosplit " Shows the effects of a substitution incrementally as you type, but don't open split
 endif
-set shortmess-=S
+set shortmess-=S        " show search count
 " }}}
 
 " Buffers {{{
 " set showtabline=2       " Always show tabline
 set autoread            " Reload files changed outside vim
-set hidden              " allow multiple buffers to be loaded
+set hidden              " allow changed buffers to be 'hidden'
 
 " Restore last cursor position and marks on open
 au BufReadPost *
@@ -224,8 +244,8 @@ set list
 
 " Security {{{
 " modelines can be dangerous
-set modelines=0
-set nomodeline
+" set modelines=0
+" set nomodeline
 " }}}
 
 " ==================================================== }}}
@@ -237,21 +257,31 @@ let mapleader = " "
 " }}}
 
 " Disable accidental Ex mode
-" nnoremap Q <Nop>
+" nnoremap Q <nop>
+
+" nnoremap s <nop>
+" nnoremap S <nop>
 
 " Emacs style bindings
-" Go to start of line
+" go to start of line
 cnoremap <C-a> <C-b>
-" tnoremap <C-a> <C-b>
+nnoremap <C-a> 0
 inoremap <C-a> <C-o>^
+" tnoremap <C-a> <C-b>
 " go to end of line
+nnoremap <C-e> $
 inoremap <C-e> <C-o>$
 
+" move word forward/backward
+nnoremap <M-b> b
+inoremap <M-b> <C-o>b
+nnoremap <M-f> e
+inoremap <M-f> <C-o>e
+
 " Close current buffer (safely)
-nnoremap q :confirm bd<CR>
+nnoremap q <cmd>confirm bd<CR>
 nnoremap Q <cmd>confirm qa<CR>
-" nnoremap <C-q> :confirm :q<CR> " Doesn't work in windows
-" TODO: figure out how to fix <C-v> in windows
+" nnoremap <C-q> :confirm :q<CR> " Doesn't work in windows os
 
 " give it a try and you will like it
 nnoremap ; :
@@ -269,24 +299,16 @@ nnoremap <expr> 0 getline('.')[: col('.') - 2] =~ '^\s*$' ? '0' : '0^'
 " vnoremap F ?
 " onoremap F ?
 
-" nnoremap : ;
-" vnoremap : ;
-
 " TODO: try these bindings
-" nnoremap x "_x
+" nnoremap x d
+" vnoremap x d
 " nnoremap d "_d
-" nnoremap D "_D
 " vnoremap d "_d
+" nnoremap D "_D
 
 " nnoremap <leader>d d
 " nnoremap <leader>D D
 " vnoremap <leader>d d
-
-" switch buffer
-if (has("gui_running"))
-    map <C-Tab> :bn<CR>
-    map <C-S-Tab> :bp<CR>
-endif
 
 nnoremap U <C-r>
 
@@ -306,7 +328,7 @@ nnoremap <silent> <S-s> :update<CR>:echo 'File Saved'<CR>
 nnoremap Y y$
 
 " Toggle relative numbers
-nnoremap <leader>tn :set rnu!<CR>:set rnu?<CR>
+" nnoremap <leader>tn :set rnu!<CR>:set rnu?<CR>
 " Toggle hl search
 nnoremap <leader>th :set hls!<CR>:set hls?<CR>
 " remove highlight from search
@@ -320,7 +342,8 @@ nnoremap gV `[v`]
 " Longer scrolls
 " nnoremap <C-e> 3<C-e>
 " nnoremap <C-y> 3<C-y>
-" Easier indentation operations
+
+" Easier indenting
 nnoremap > >>
 nnoremap < <<
 vnoremap > >gv
@@ -341,7 +364,7 @@ nnoremap <M-/> LVH<Esc>/\%V
 vnoremap gs "zy:%s/<C-r>"//gc<left><left><left>
 nnoremap gs :%s/<C-r><C-w>//gc<left><left><left>
 
-" Remap 'search mode' maps
+" Remap 'search mode' maps - 
 set wildcharm=<C-z>
 cnoremap <expr> <Tab>   getcmdtype() =~ '[\/?]' ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() =~ '[\/?]' ? "<C-t>" : "<S-Tab>"
@@ -350,7 +373,7 @@ cnoremap <expr> <S-Tab> getcmdtype() =~ '[\/?]' ? "<C-t>" : "<S-Tab>"
 nnoremap <F6> :let $VIM_DIR=expand('%:p:h')<CR>:vs\|:te<CR>cd $VIM_DIR<CR>
 " tnoremap <Esc> <C-\><C-n> " messes with fzf floating window search
 
-" Quickfix " TODO: add stuff
+" Quickfix " TODO: add easier bindings for cycle commands
 " Open the quickfix window
 nnoremap <Leader>qo <cmd>copen<CR>
 " Close it
@@ -368,7 +391,10 @@ nnoremap <Leader>qN <cmd>cnfile<CR>
 " Go to the last error in the prev file
 nnoremap <Leader>qP <cmd>cpfile<CR>
 " Go to error under cursor (if cursor is in quickfix window)
-nnoremap <Leader>q. <cmd>.cc<CR>
+" nnoremap <Leader>q. <cmd>.cc<CR>
+
+" Toggle all folds under cursor
+nnoremap \ zA
 
 " ==================================================== }}}
 
@@ -384,22 +410,21 @@ endfunc
 nnoremap <leader>os :call DeleteTrailingWS()<CR>
 
 " Delete empty buffers (buffers with title "[No Name]")
-" Mapped in vim-which-key
-function! s:CleanEmptyBuffers()
-    let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
-    if !empty(buffers)
-        exe 'bw ' . join(buffers, ' ')
-    endif
-endfunction
+" function! s:CleanEmptyBuffers()
+"     let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
+"     if !empty(buffers)
+"         exe 'bw ' . join(buffers, ' ')
+"     endif
+" endfunction
 
-nnoremap <leader>bc :call DeleteEmptyBuffers()<CR>
+" nnoremap <leader>bc :call DeleteEmptyBuffers()<CR>
 
 " autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Highlight yanked text briefly
 augroup highlight_yank
     autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("IncSearch", 250)
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=150}
 augroup END
 
 augroup terminal_job
@@ -440,85 +465,13 @@ nnoremap <leader>nl :NRL<CR>
 
 " ================ illuminate ======================== {{{
 " RRethy/vim-illuminate
-let g:Illuminate_ftblacklist = ['CHADTree', 'startify', 'dashboard', 'vista', 'qf']
+let g:Illuminate_ftblacklist = ['CHADTree', 'startify', 'dashboard', 'vista', 'qf', 'help']
 " let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python']
 " ==================================================== }}}
 
 " ================= vim-rooter ======================= {{{
 " airblade/vim-rooter
 " let g:rooter_patterns = ['Rakefile', '.git/']
-" ==================================================== }}}
-
-" ================= LuaTree ========================== {{{
-""" kyazdani42/nvim-tree.lua
-
-"" let g:lua_tree_side = 'right' " 'right' | 'left' left by default
-"" let g:lua_tree_size = 40 "30 by default
-"let g:lua_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
-"" let g:lua_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
-"let g:lua_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-"let g:lua_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-"" let g:lua_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-"" let g:lua_tree_show_icons = {
-""     \ 'git': 1,
-""     \ 'folders': 1,
-""     \ 'files': 1,
-""     \ }
-""If 0, do not show the icons for one of 'git' 'folder' and 'files'
-""1 by default, notice that if 'files' is 1, it will only display
-""if nvim-web-devicons is installed and on your runtimepath
-
-"" You can edit keybindings be defining this variable
-"" You don't have to define all keys.
-"" NOTE: the 'edit' key will wrap/unwrap a folder and open a file
-"let g:lua_tree_bindings = {
-"    \ 'edit':           '<CR>',
-"    \ 'edit_vsplit':    '<C-v>',
-"    \ 'edit_split':     '<C-x>',
-"    \ 'edit_tab':       '<C-t>',
-"    \ 'toggle_ignored': 'I',
-"    \ 'preview':        '<Tab>',
-"    \ 'cd':             '<C-]>',
-"    \ 'create':         'a',
-"    \ 'remove':         'd',
-"    \ 'rename':         'r',
-"    \ 'cut':            'x',
-"    \ 'copy':           'c',
-"    \ 'paste':          'p',
-"    \ 'prev_git_item':  '[c',
-"    \ 'next_git_item':  ']c',
-"    \ }
-
-"" Disable default mappings by plugin
-"" Bindings are enable by default, disabled on any non-zero value
-"" let lua_tree_disable_keybindings=1
-
-"" default will show icon by default if no icon is provided
-"" default shows no icon by default
-"let g:lua_tree_icons = {
-"    \ 'default': ' ',
-"    \ 'git': {
-"    \   'unstaged': "✗",
-"    \   'staged': "✓",
-"    \   'unmerged': "═",
-"    \   'renamed': "➜",
-"    \   'untracked': "★"
-"    \   },
-"    \ 'folder': {
-"    \   'default': "",
-"    \   'open': ""
-"    \   }
-"    \ }
-
-"nnoremap <F2> :LuaTreeToggle<CR>
-"" nnoremap <leader>r :LuaTreeRefresh<CR>
-"" nnoremap <S-<F2>> :LuaTreeFindFile<CR>
-"" LuaTreeOpen and LuaTreeClose are also available if you need them
-
-"" set termguicolors " this variable must be enabled for colors to be applied properly
-
-"" a list of groups can be found at `:help lua_tree_highlight`
-"" highlight LuaTreeFolderIcon guibg=blue
 " ==================================================== }}}
 
 " ================= CHADTree ========================= {{{
@@ -543,15 +496,14 @@ nnoremap <silent> st :Vista finder<CR>
 " ================= FZF ============================== {{{
 " junegunn/fzf.vim
 
+" Default FZF layout
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'sharp' } }
 " let g:fzf_layout = { 'down': '~25%' }
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Todo', 'border': 'sharp' } }
 
-" Default FZF layout
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'sharp' } }
-
 " Add FZF results to quickfix list
 " CTRL-A to select all
-" CTRL-Q to build quickfix list
+" CTRL-Q to build quickfix list with selected items
 function! s:build_quickfix_list(lines)
   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
   copen
@@ -566,72 +518,41 @@ let g:fzf_action = {
 
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
-" Add options to :Commands
+" Change layout for :Commands
 command! -bang Commands
 \ call fzf#vim#commands({ 'window': { 'width': 1, 'height': 0.33, 'xoffset': 0, 'yoffset': 1, 'border': 'sharp' } }, <bang>0)
 
-" Add options to :BLines
+" Change layout for :BLines
 command! -bang BLines
 \ call fzf#vim#buffer_lines({ 'window': { 'width': 1, 'height': 0.33, 'xoffset': 0, 'yoffset': 1, 'border': 'sharp' } }, <bang>0)
 
-" Add options to :Lines
+" Change layout for :Lines
 command! -bang Lines
 \ call fzf#vim#lines({ 'window': { 'width': 1, 'height': 0.33, 'xoffset': 0, 'yoffset': 1, 'border': 'sharp' } }, <bang>0)
 
-" call fzf#run({'source': 'git ls-files', 'sink': 'e'})
-
-command! FZFSearchProject call fzf#run(fzf#wrap({
-\   'source': 'bash -c "'.
-\             'fd -H -d 3 -t d "^.git$" '.join(s:project_directories, ' ').' -x echo {//}'.
-\              '"',
-\   'sink' : 'cd',
-\   'options' : "--preview",
-\   }))
+" Doesn't work properly - TODO need fixing
+" Search for projects in s:project_directories
+" command! FZFSearchProject call fzf#run(fzf#wrap({
+" \   'source': 'bash -c "'.
+" \             'fd -H -d 3 -t d "^.git$" '.join(s:project_directories, ' ').' -x echo {//}'.
+" \              '"',
+" \   'sink' : 'cd',
+" \   'options' : "--preview",
+" \   }))
 " \ 'dir' : g:projectroot,
-nnoremap <silent> <leader>i :call Fzf_dev()<CR>
-
-" TODO: use this and do something....
-" ripgrep
-if executable('rg')
-    let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-    set grepprg=rg\ --vimgrep\ -g\ \!web/reducers/api/auto.ts\ -g\ \!api/src/swagger.json\ -g\ \!api/src/routes.ts
-    set grepformat^=%f:%l:%c:%m
-
-    function! Grep(...)
-        return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
-    endfunction
-
-    command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>)
-    command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
-
-    cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
-    cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
-
-    augroup quickfix
-        autocmd!
-        autocmd QuickFixCmdPost cgetexpr cwindow
-        autocmd QuickFixCmdPost lgetexpr lwindow
-    augroup END
-
-    command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-endif
-
-nnoremap K :Grep <C-R><C-W><CR>:cw<CR>
 
 command! ListFiles execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles'
-nnoremap <silent> <Leader>ff <cmd>ListFiles<CR>
 nnoremap <silent> sf <cmd>ListFiles<CR>
-nnoremap <silent> sp <cmd>FZFSearchProject<CR>
+" nnoremap <silent> sp <cmd>FZFSearchProject<CR>
 nnoremap <silent> sg <cmd>Rg<CR>
-nnoremap <silent> sd <cmd>Dirvish<CR>
+" nnoremap <silent> sd <cmd>Dirvish<CR> " use default -
 nnoremap <silent> sl <cmd>BLines<CR>
 nnoremap <silent> sL <cmd>Lines<CR>
 nnoremap <silent> sb <cmd>Buffers<CR>
-" nnoremap <silent> <leader>bb <cmd>Buffers<CR>
 " nnoremap <silent> sh <cmd>History<CR>
 " nnoremap <silent> sc <cmd>Colors<CR>
 nnoremap <silent> sm <cmd>Marks<CR>
-nnoremap <silent> <F1>       <cmd>Helptags<CR>
+nnoremap <silent> <F1> <cmd>Helptags<CR>
 
 imap <c-x><c-k> <plug>(fzf-complete-word)
 " imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -793,7 +714,8 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " }}}
 
 " ================= GitGutter ======================== {{{
-
+let g:gitgutter_grep = 'rg'
+let g:gitgtter_sign_priority = 5
 " ==================================================== }}}
 
 " ================= Neoformat ======================== {{{
@@ -854,7 +776,9 @@ endif
 " colo gruvbox
 
 " let ayucolor="mirage"
-colo ayu
+" colo ayu
+
+colo tokyonight
 
 " colo embark
 " let g:embark_terminal_italics = 1
@@ -879,6 +803,7 @@ colo ayu
 " hi SignColumn ctermbg=NONE guibg=NONE
 
 " Remove ~ chars from end of file (set after colorscheme set)
+" -doesn't always work
 highlight NonText guifg=bg
 " comments should be italic
 " highlight Comment cterm=italic gui=italic
@@ -915,83 +840,99 @@ highlight NonText guifg=bg
 
 " ================= Lightline ========================== {{{
 " lightline
-let g:lightline#bufferline#show_number  = 1
-let g:lightline#bufferline#shorten_path = 1
-let g:lightline#bufferline#unnamed      = '[No Name]'
-let g:lightline#bufferline#show_number  = 2
-let g:lightline#bufferline#number_separator = '│'
-let g:lightline#bufferline#enable_devicons = 1
-let g:lightline#bufferline#unicode_symbols = 1
-let g:lightline#bufferline#clickable = 1
-let g:lightline#bufferline#filename_modifier = ':t'
+
+" lightline bufferline
+" let g:lightline#bufferline#show_number  = 1
+" let g:lightline#bufferline#shorten_path = 1
+" let g:lightline#bufferline#unnamed      = '[No Name]'
+" let g:lightline#bufferline#show_number  = 2
+" let g:lightline#bufferline#number_separator = '│'
+" let g:lightline#bufferline#enable_devicons = 1
+" let g:lightline#bufferline#unicode_symbols = 1
+" let g:lightline#bufferline#clickable = 1
+" let g:lightline#bufferline#filename_modifier = ':t'
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'ayu'
-let g:lightline.mode_map = {
-    \   'n' : 'N',
-    \   'i' : 'I',
-    \   'R' : 'R',
-    \   'v' : 'V',
-    \   'V' : 'VL',
-    \   "\<C-v>": 'VB',
-    \   'c' : 'C',
-    \   's' : 'S',
-    \   'S' : 'SL',
-    \   "\<C-s>": 'SB',
-    \   't': 'T',
-    \ }
+let g:lightline.colorscheme = 'tokyonight'
+" let g:lightline.mode_map = {
+"   \   'n' : 'N',
+"   \   'i' : 'I',
+"   \   'R' : 'R',
+"   \   'v' : 'V',
+"   \   'V' : 'VL',
+"   \   "\<C-v>": 'VB',
+"   \   'c' : 'C',
+"   \   's' : 'S',
+"   \   'S' : 'SL',
+"   \   "\<C-s>": 'SB',
+"   \   't': 'T',
+"   \ }
+" let g:lightline.active = {
+"   \   'left': [ [ 'mode', 'paste' ],
+"   \             [ 'gitbranch', 'readonly'],
+"   \             [ 'filename' ] ],
+"   \   'right': [ [ 'lineinfo', 'percent' ],
+"   \              [ '' ],
+"   \              [ 'filetype' ] ] ,
+"   \ }
 let g:lightline.active = {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'filename', 'readonly', 'blame' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \              [ 'percent' ],
-    \              [ 'filetype' ] ] ,
-    \ }
-" let g:lightline.tabline = {
-"     \   'left': [ ['buffers'] ],
-"     \   'right': [ ['close'] ]
-"     \ }
+  \   'left': [ [ 'filename' ],
+  \             [ 'gitbranch', 'readonly'],
+  \             [ 'lsp_status' ] ],
+  \   'right': [ [ 'lineinfo', '' ],
+  \              [ '' ],
+  \              [ '' ] ] ,
+  \ }
 let g:lightline.component = {
-    \   'lineinfo': ' %3l:%-2v',
-    \ }
+  \   'lineinfo': ' %3l:%-2v',
+  \ }
 let g:lightline.component_expand = {
-    \   'buffers': 'lightline#bufferline#buffers'
-    \ }
-let g:lightline.component_type = {
-    \   'buffers': 'tabsel'
-    \ }
+  \   'lsp_status': 'LspStatus',
+  \ }
+let g:lightline.component_visible_condition = {
+  \   'lsp_status': 'lua not vim.tbl_isempty(vim.lsp.buf_get_clients(0))',
+  \ }
 let g:lightline.component_function = {
-    \   'blame'    : 'LightlineGitBlame',
-    \   'gitbranch': 'fugitive#head',
-    \   'readonly' : 'LightlineReadonly',
-    \   'filename' : 'LightlineFilename',
-    \ }
-let g:lightline.component_raw = {
-    \ 'buffers': 1
-    \ }
+  \   'gitbranch': 'LightlineBranch',
+  \   'gitstatus': 'LightlineGitStatus',
+  \   'readonly' : 'LightlineReadonly',
+  \   'filename' : 'LightlineFilename',
+  \ }
 let g:lightline.separator = {
-    \   'left': '', 'right': ''
-    \ }
+  \   'left': '', 'right': ''
+  \ }
 let g:lightline.subseparator = {
-    \   'left': '', 'right': ''
-    \ }
-
-function! LightlineFugitive()
-    if exists('*FugitiveHead')
-        let branch = FugitiveHead()
-        return branch !=# '' ? ''.branch : ''
-    endif
-    return ''
+  \   'left': '', 'right': ''
+  \ }
+function! LightlineBranch()
+  if exists('*FugitiveHead')
+    let branch = FugitiveHead()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
 endfunction
 
-function! LightlineGitBlame() abort
-  let blame = get(b:, 'coc_git_blame', '')
-  " return blame
-  return winwidth(0) > 120 ? blame : ''
+" function! LightlineGitBlame() abort
+"   let blame = get(b:, 'coc_git_blame', '')
+"   " return blame
+"   return winwidth(0) > 120 ? blame : ''
+" endfunction
+
+function! LightlineGitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('+%d ~%d -%d', a, m, r)
+endfunction
+
+function! LspStatus() abort
+  if luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
+     return luaeval("require('lsp-status').status()")
+  else
+     return ''
+  endif
 endfunction
 
 function! LightlineReadonly()
-    return &readonly ? '' : ''
+  return &readonly ? '' : ''
 endfunction
 
 function! LightlineFilename()
@@ -1016,95 +957,95 @@ let g:hardtime_timeout = 1000
 " ==================================================== }}}
 
 " ================= Startify ========================= {{{
-" mhinz/vim-startify
-" let g:ascii = [
-" \   '                                            ',
-" \   '============================================',
-" \   '                                            ',
-" \ ]
-let g:startify_files_number = 5
-" Don't change to directory when selecting a file
-let g:startify_change_to_dir = 0
-" let g:startify_custom_header = [ ]
-let g:startify_relative_path = 1
-let g:startify_use_env = 1
-let g:startify_change_to_vcs_root = 1
-let g:startify_fortune_use_unicode = 1
-let g:startify_padding_left = 4
-let g:startify_enable_special = 0
+" " mhinz/vim-startify
+" " let g:ascii = [
+" " \   '                                            ',
+" " \   '============================================',
+" " \   '                                            ',
+" " \ ]
+" let g:startify_files_number = 5
+" " Don't change to directory when selecting a file
+" let g:startify_change_to_dir = 0
+" " let g:startify_custom_header = [ ]
+" let g:startify_relative_path = 1
+" let g:startify_use_env = 1
+" let g:startify_change_to_vcs_root = 1
+" let g:startify_fortune_use_unicode = 1
+" let g:startify_padding_left = 4
+" let g:startify_enable_special = 0
 
-" Sessions
-" let g:startify_session_autoload = 0
-let g:startify_session_persistence = 1
-let g:startify_session_sort = 1
-" let g:startify_session_number = 999
-let g:startify_session_before_save = [
-\   'echo "Cleaning up before saving.."',
-\   'silent! NERDTreeClose',
-\   'silent! Vista!',
-\   'echo "Done"'
-\ ]
-
-" let g:startify_session_savevars = [
-" \   'g:startify_session_savevars',
-" \   'g:startify_session_savecmds',
-" \   'g:random_plugin_use_feature'
+" " Sessions
+" " let g:startify_session_autoload = 0
+" let g:startify_session_persistence = 1
+" let g:startify_session_sort = 1
+" " let g:startify_session_number = 999
+" let g:startify_session_before_save = [
+" \   'echo "Cleaning up before saving.."',
+" \   'silent! NERDTreeClose',
+" \   'silent! Vista!',
+" \   'echo "Done"'
 " \ ]
 
-" let g:startify_session_savecmds = [
-" \   'silent !pdfreader ~/latexproject/main.pdf &'
-" \ ]
+" " let g:startify_session_savevars = [
+" " \   'g:startify_session_savevars',
+" " \   'g:startify_session_savecmds',
+" " \   'g:random_plugin_use_feature'
+" " \ ]
 
-let g:startify_custom_header = 'map(startify#fortune#boxed(), "\"   \".v:val")'
-let s:footer_string = "Loaded ".len(keys(g:plugs))." plugins"
-let g:startify_custom_footer = 'map(startify#fortune#boxed(["Loaded ".len(keys(g:plugs))." plugins"]), "\"   \".v:val")'
+" " let g:startify_session_savecmds = [
+" " \   'silent !pdfreader ~/latexproject/main.pdf &'
+" " \ ]
 
-" Format the entries
-" function! StartifyEntryFormat()
-"     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+" let g:startify_custom_header = 'map(startify#fortune#boxed(), "\"   \".v:val")'
+" let s:footer_string = "Loaded ".len(keys(g:plugs))." plugins"
+" let g:startify_custom_footer = 'map(startify#fortune#boxed(["Loaded ".len(keys(g:plugs))." plugins"]), "\"   \".v:val")'
+
+" " Format the entries
+" " function! StartifyEntryFormat()
+" "     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+" " endfunction
+
+" " List git commits
+" function! s:list_commits()
+"     if len(system('git rev-parse'))
+"         return []
+"     endif
+"     let commits = systemlist('git log --oneline | head -n5')
+"     return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "Gedit " . matchstr(v:val, "^\\x\\+") }')
 " endfunction
 
-" List git commits
-function! s:list_commits()
-    if len(system('git rev-parse'))
-        return []
-    endif
-    let commits = systemlist('git log --oneline | head -n5')
-    return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "Gedit " . matchstr(v:val, "^\\x\\+") }')
-endfunction
+" " startup list
+" let g:startify_lists = [
+" \   { 'header': [ '    Sessions'         ], 'type': 'sessions',                  },
+" \   { 'header': [ '    Bookmarks'        ], 'type': 'bookmarks',                 },
+" \   { 'header': [ '    Commands'         ], 'type': 'commands',                  },
+" \ ]
+" " \   { 'header': [ '    Recent Commits'   ], 'type': function('s:list_commits'),  },
 
-" startup list
-let g:startify_lists = [
-\   { 'header': [ '    Sessions'         ], 'type': 'sessions',                  },
-\   { 'header': [ '    Bookmarks'        ], 'type': 'bookmarks',                 },
-\   { 'header': [ '    Commands'         ], 'type': 'commands',                  },
-\ ]
-" \   { 'header': [ '    Recent Commits'   ], 'type': function('s:list_commits'),  },
+" let g:startify_bookmarks = [
+" \   { 'v': $MYVIMRC },
+" \   { 'a': '~/.config/alacritty/alacritty.yml' },
+" \   { 'r': '~/.config/karabiner/karabiner.json' },
+" \   { 'z': '~/.zshrc' },
+" \   { 'g': '~/.gitconfig' },
+" \   { 'c': '~/.config/nvim/coc-settings.json' },
+" \ ]
 
-let g:startify_bookmarks = [
-\   { 'v': $MYVIMRC },
-\   { 'a': '~/.config/alacritty/alacritty.yml' },
-\   { 'r': '~/.config/karabiner/karabiner.json' },
-\   { 'z': '~/.zshrc' },
-\   { 'g': '~/.gitconfig' },
-\   { 'c': '~/.config/nvim/coc-settings.json' },
-\ ]
+" " autocmd User Startified setlocal cursorline
 
-" autocmd User Startified setlocal cursorline
+" let g:startify_commands = [
+" \   { 'up': [ 'Update Plugins'        , ':PlugUpdate'  ] } ,
+" \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+" \ ]
 
-let g:startify_commands = [
-\   { 'up': [ 'Update Plugins'        , ':PlugUpdate'  ] } ,
-\   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
-\ ]
+" " warning: this messes with git diff / git log if (neo)vim is set as the git pager
+" " augroup start_startify
+" "     autocmd!
+" "     autocmd VimEnter *
+" "     \    if !argc() | Startify | NERDTreeToggle | wincmd w | endif
+" " augroup END
 
-" warning: this messes with git diff / git log if (neo)vim is set as the git pager
-" augroup start_startify
-"     autocmd!
-"     autocmd VimEnter *
-"     \    if !argc() | Startify | NERDTreeToggle | wincmd w | endif
-" augroup END
-
-" nnoremap <Space>bh :Startify<CR>
+" " nnoremap <Space>bh :Startify<CR>
 " ==================================================== }}}
 
 " ================= Dashboard-nvim =================== {{{
@@ -1165,6 +1106,17 @@ let g:dashboard_custom_header = [
     \ ]
 " ====================================================== }}}
 
+" scrollbar.nvim {{{
+" if has('nvim-0.5')
+"   augroup ScrollbarInit
+"     autocmd!
+"     autocmd CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()
+"     autocmd WinEnter,FocusGained           * silent! lua require('scrollbar').show()
+"     autocmd WinLeave,FocusLost             * silent! lua require('scrollbar').clear()
+"   augroup end
+" endif
+" }}}
+
 " ================= Vimade =========================== {{{
 " 'TaDaa/vimade'
 " let g:vimade_running = 0
@@ -1202,38 +1154,111 @@ let g:indentLine_char = '▏'
 " ==================================================== }}}
 
 " nvim-treesitter {{{
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   ensure_installed = { "typescript", "tsx" },     -- one of "all", "language", or a list of languages
-"   highlight = {
-"     enable = true,              -- false will disable the whole extension
-"     disable = { "c", "rust" },  -- list of language that will be disabled
-"   },
-" }
-" EOF
+if has('nvim-0.5')
+lua <<EOF
+local treesitter = require'nvim-treesitter.configs'
+
+treesitter.setup {
+  ensure_installed = {"typescript", "tsx", "json", "javascript", "html", "css" },
+  highlight = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      -- init_selection = "gnn",
+      -- node_incremental = "grn",
+      -- scope_incremental = "grc",
+      -- node_decremental = "grm",
+    },
+  },
+  indent = {
+    enable = true
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+
+        -- Or you can define your own textobjects like this
+        -- ["iF"] = {
+          -- python = "(function_definition) @function",
+          -- cpp = "(function_definition) @function",
+          -- c = "(function_definition) @function",
+          -- java = "(method_declaration) @function",
+        -- },
+      },
+    },
+    move = {
+      enable = true,
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+  },
+}
+EOF
+
+" Folding
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=1
+set foldnestmax=3
+endif
 " }}}
 
-" nvim-lsp {{{
+" nvim-lspconfig {{{
+if has('nvim-0.5')
+lua <<EOF
 
-" lua <<EOF
-"   local on_attach_vim = function()
-"     require'completion'.on_attach()
-"     require'diagnostic'.on_attach()
-"   end
-"   require'nvim_lsp'.tsserver.setup{on_attach=on_attach_vim}
-"   require'nvim_lsp'.pyls.setup{on_attach=on_attach_vim}
-" EOF
+  local on_attach_vim = function()
+    -- require'completion'.on_attach()
+  end
+  require'lspconfig'.tsserver.setup{on_attach=on_attach_vim}
+  require'lspconfig'.pyls.setup{on_attach=on_attach_vim}
+EOF
 
-" " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" nnoremap <silent> ]]    <cmd>lua require'lsp-ext'.peek_definition()<cr>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> ]]    <cmd>lua require'lsp-ext'.peek_definition()<cr>
+
+" Diagnostics
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl= numhl=
+"  
+" https://github.com/nvim-lua/diagnostic-nvim/issues/73
+
+lua <<EOF
+  local lsp_status = require('lsp-status')
+  lsp_status.register_progress()
+EOF
 
 " " Use <Tab> and <S-Tab> to navigate through popup menu
 " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -1251,11 +1276,12 @@ let g:indentLine_char = '▏'
 "   \ pumvisible() ? "\<C-n>" :
 "   \ <SID>check_back_space() ? "\<TAB>" :
 "   \ completion#trigger_completion()
+
 " " Set completeopt to have a better completion experience
-" set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noinsert,noselect
 
 " " Avoid showing message extra message when using completion
-" set shortmess+=c
+set shortmess+=c
 
 " " Snippet support
 " let g:completion_enable_snippet = 'vim-vsnip'
@@ -1321,7 +1347,7 @@ let g:indentLine_char = '▏'
 " nnoremap <Leader>en <cmd>NextDiagnosticCycle<cr>
 " nnoremap <Leader>ep <cmd>PrevDiagnosticCycle<cr>
 " nnoremap <Leader>ee <cmd>OpenDiagnostic<cr>
-
+endif
 " }}}
 
 " vsnip {{{
@@ -1436,53 +1462,13 @@ let g:which_key_map.n.n = 'narrow-visual'
 "     \ }
 " ====================================================== }}}
 
-" Statusline
-" source ~/.config/statusline.vim
-
 " Check this out
-" Plug 'chxuan/change-colorscheme'
 " https://github.com/itchyny/calendar.vim
-" https://github.com/rhysd/clever-f.vim
-" https://github.com/zhaocai/GoldenView.Vim
-" https://github.com/kkoomen/vim-doge
 " https://github.com/blueyed/vim-diminactive
-" https://github.com/farmergreg/vim-lastplace
 " https://github.com/pechorin/any-jump.vim
 " https://github.com/wellle/context.vim
-" https://github.com/MattesGroeger/vim-bookmarks
 " https://github.com/mhinz/vim-grepper
-" https://github.com/mhinz/sayonara
-" https://github.com/MattesGroeger/vim-bookmarks
+" https://github.com/mhinz/vim-sayonara
 " https://github.com/tpope/vim-rhubarb
 " https://github.com/tpope/vim-projectionist
-" let settings = {
-          " \   "pyls" : {
-          " \     "enable" : v:true,
-          " \     "trace" : { "server" : "verbose", },
-          " \     "commandPath" : "",
-          " \     "configurationSources" : [ "pycodestyle" ],
-          " \     "plugins" : {
-          " \       "jedi_completion" : { "enabled" : v:true, },
-          " \       "jedi_hover" : { "enabled" : v:true, },
-          " \       "jedi_references" : { "enabled" : v:true, },
-          " \       "jedi_signature_help" : { "enabled" : v:true, },
-          " \       "jedi_symbols" : {
-          " \         "enabled" : v:true,
-          " \         "all_scopes" : v:true,
-          " \       },
-          " \       "mccabe" : {
-          " \         "enabled" : v:true,
-          " \         "threshold" : 15,
-          " \       },
-          " \       "preload" : { "enabled" : v:true, },
-          " \       "pycodestyle" : { "enabled" : v:true, },
-          " \       "pydocstyle" : {
-          " \         "enabled" : v:false,
-          " \         "match" : "(?!test_).*\\.py",
-          " \         "matchDir" : "[^\\.].*",
-          " \       },
-          " \       "pyflakes" : { "enabled" : v:true, },
-          " \       "rope_completion" : { "enabled" : v:true, },
-          " \       "yapf" : { "enabled" : v:true, },
-          " \     }}}
-
+" https://github.com/lewis6991/gitsigns.nvim
