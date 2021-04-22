@@ -5,7 +5,6 @@ let g:compe.enabled = v:true
 let g:compe.autocomplete = v:true
 let g:compe.debug = v:false
 let g:compe.min_length = 1
-let g:compe.allow_prefix_unmatch = v:false
 let g:compe.preselect = 'enable'
 let g:compe.throttle_time = 80
 let g:compe.source_timeout = 200
@@ -25,11 +24,8 @@ let g:compe.source.vsnip = v:true
 " let g:compe.source.calc = v:true
 
 
-" NOTE: Order is important. You can't lazy loading lexima.vim.
-let g:lexima_no_default_rules = v:true
-call lexima#set_default_rules()
 inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
+inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })

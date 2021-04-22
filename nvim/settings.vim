@@ -51,6 +51,10 @@ if (has('nvim'))
   " set pumblend=20         " transparency in pop-up menu
   " set winblend=20         " transparency in floating window
 endif
+
+" statusline and tabline
+set laststatus=0
+set showtabline=2
 " }}}
 
 " Searching {{{

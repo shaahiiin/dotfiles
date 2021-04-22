@@ -23,8 +23,8 @@ inoremap <M-f> <C-o>e
 " Close current buffer (safely)
 " nnoremap q <cmd>confirm bd<CR>
 " nnoremap Q <cmd>confirm qa<CR>
-nnoremap q <cmd>Sayonara<CR>
-nnoremap Q <cmd>Sayonara!<CR>
+nnoremap q <cmd>bd<CR>
+nnoremap Q <cmd>bp\|bd \#<CR>
 " nnoremap <C-q> :confirm :q<CR> " Doesn't work in windows os
 
 " give it a try and you will like it
@@ -102,3 +102,6 @@ nnoremap <Leader>qP <cmd>cpfile<CR>
 
 " Toggle all folds under cursor
 " nnoremap \ zA
+
+nnoremap <leader>ev <cmd>tab split $MYVIMRC<CR>
+nnoremap <leader>sv <cmd>so $MYVIMRC<CR>

@@ -16,13 +16,14 @@ runtime mappings.vim
 runtime plugins/fzf.vim
 runtime plugins/gitgutter.vim
 runtime plugins/neoformat.vim
+runtime plugins/lightline.vim
 runtime plugins/mundo.vim
 runtime plugins/colors.vim
 runtime plugins/smoothie.vim
 
 if has('nvim-0.5')
   lua require('utils')
-  lua require('plugins/galaxyline')
+  " lua require('plugins/galaxyline')
   lua require('plugins/treesitter')
   lua require('plugins/lsp')
   " lua require('plugins/telescope')
