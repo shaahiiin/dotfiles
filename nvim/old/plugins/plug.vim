@@ -63,15 +63,15 @@ Plug 'kyazdani42/nvim-web-devicons'
 if has('nvim-0.5')
   " LSP
   Plug 'neovim/nvim-lspconfig'
-  " Plug 'nvim-lua/lsp-status.nvim'
-  " Plug 'ojroques/nvim-lspfuzzy'
-  " Plug 'onsails/lspkind-nvim'
+  Plug 'nvim-lua/lsp-status.nvim'
+  Plug 'ojroques/nvim-lspfuzzy'
+  Plug 'onsails/lspkind-nvim'
   " TreeSitter
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   " Plug 'romgrk/nvim-treesitter-context'
   Plug 'nvim-treesitter/nvim-treesitter-textobjects'
   " Completion (with lsp/treesitter support)
-  " Plug 'hrsh7th/nvim-compe'
+  Plug 'hrsh7th/nvim-compe'
   " Snippets
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'

@@ -25,9 +25,9 @@ if has('nvim-0.5')
   lua require('utils')
   " lua require('plugins/galaxyline')
   lua require('plugins/treesitter')
-  " lua require('plugins/lsp')
+  lua require('plugins/lsp')
   " lua require('plugins/telescope')
-  " runtime plugins/nvim-compe.vim
+  runtime plugins/nvim-compe.vim
 endif
 
 " runtime plugins/vsnip.vim
