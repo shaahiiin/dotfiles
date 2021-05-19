@@ -17,7 +17,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'justinmk/vim-dirvish'                                   " browse directory / files
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins', 'on': 'CHADOpen'} " file explorer
 " Plug 'kyazdani42/nvim-tree.lua'
-Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                " view tags and LSP symbols
+" Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }                " view tags and LSP symbols
 " Plug 'kshenoy/vim-signature'                                  " better management of marks
 " Plug 'Yggdroot/indentLine'                                    " indent lines
 " ==================================================== }}}
@@ -41,7 +41,7 @@ Plug 'ghifarit53/tokyonight-vim'
 " Plug 'foxbunny/vim-amber'
 " Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'glepnir/zephyr-nvim'
-Plug 'christianchiarulli/nvcode-color-schemes.vim'
+" Plug 'christianchiarulli/nvcode-color-schemes.vim'
 " ==================================================== }}}
 
 " ================ Appearance ======================== {{{
@@ -49,7 +49,7 @@ Plug 'itchyny/lightline.vim'                                  " status line
 " Plug 'glepnir/galaxyline.nvim'                                  " status line
 " Plug 'romgrk/barbar.nvim'                                       " bufferlist on tabline
 " Plug 'ryanoasis/vim-devicons'                                 " support file icons, etc
-Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'RRethy/vim-illuminate'                                  " highlight word under cursor (lsp provides better highlight)
 " Plug 'TaDaa/vimade'                                           " fade inactive windows
 " Plug 'DanilaMihailov/beacon.nvim'                             " ping cursor location after every jump
@@ -62,7 +62,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 " LSP
 if has('nvim-0.5')
   " LSP
-  Plug 'neovim/nvim-lspconfig'
+  " Plug 'neovim/nvim-lspconfig'
   " Plug 'nvim-lua/lsp-status.nvim'
   " Plug 'ojroques/nvim-lspfuzzy'
   " Plug 'onsails/lspkind-nvim'
@@ -73,8 +73,8 @@ if has('nvim-0.5')
   " Completion (with lsp/treesitter support)
   " Plug 'hrsh7th/nvim-compe'
   " Snippets
-  Plug 'hrsh7th/vim-vsnip'
-  Plug 'hrsh7th/vim-vsnip-integ'
+  " Plug 'hrsh7th/vim-vsnip'
+  " Plug 'hrsh7th/vim-vsnip-integ'
   " Telescope (fuzzy finder)
   " Plug 'nvim-lua/popup.nvim'
   " Plug 'nvim-lua/plenary.nvim'

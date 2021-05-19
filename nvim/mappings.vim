@@ -105,3 +105,6 @@ nnoremap <Leader>qP <cmd>cpfile<CR>
 
 nnoremap <leader>ev <cmd>tab split $MYVIMRC<CR>
 nnoremap <leader>sv <cmd>so $MYVIMRC<CR>
+
+nnoremap <Esc> <Esc><cmd>noh<CR>
+
