@@ -9,6 +9,9 @@ set softtabstop=0
 set shiftwidth=4
 set expandtab
 
+" Set font for GUI
+set guifont=JetBrains\ Mono:h14
+
 " Set tab length to 2 for JS based filetypes
 au FileType javascript,typescript,typescript.tsx,typescriptreact setlocal ts=2 sts=2 sw=2
 " For vim config files, fold on the comments with triple curly braces

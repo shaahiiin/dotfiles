@@ -55,32 +55,32 @@ Plug 'itchyny/lightline.vim'                                  " status line
 " Plug 'DanilaMihailov/beacon.nvim'                             " ping cursor location after every jump
 " Plug 'Xuyuanp/scrollbar.nvim'                                 " scrollbar (disabled since this is based on cursor pos)
 " Plug 'wfxr/minimap.vim'                                       " useful as a scrollbar
+Plug 'dstein64/nvim-scrollview'
 " ==================================================== }}}
 
 " ================ Language ========================== {{{
 " Plug 'sbdchd/neoformat'                                       " code formatter TODO: replace with inbuilt (formatprg)
 " LSP
-if has('nvim-0.5')
-  " LSP
-  " Plug 'neovim/nvim-lspconfig'
-  " Plug 'nvim-lua/lsp-status.nvim'
-  " Plug 'ojroques/nvim-lspfuzzy'
-  " Plug 'onsails/lspkind-nvim'
-  " TreeSitter
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  " Plug 'romgrk/nvim-treesitter-context'
-  Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-  " Completion (with lsp/treesitter support)
-  " Plug 'hrsh7th/nvim-compe'
-  " Snippets
-  " Plug 'hrsh7th/vim-vsnip'
-  " Plug 'hrsh7th/vim-vsnip-integ'
-  " Telescope (fuzzy finder)
-  " Plug 'nvim-lua/popup.nvim'
-  " Plug 'nvim-lua/plenary.nvim'
-  " Plug 'nvim-telescope/telescope.nvim'
-  " Plug 'nvim-telescope/telescope-fzy-native.nvim'
-endif
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/lsp-status.nvim'
+" Plug 'ojroques/nvim-lspfuzzy'
+" Plug 'onsails/lspkind-nvim'
+" TreeSitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'romgrk/nvim-treesitter-context'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+" Completion (with lsp/treesitter support)
+" Plug 'hrsh7th/nvim-compe'
+" Snippets
+" Plug 'hrsh7th/vim-vsnip'
+" Plug 'hrsh7th/vim-vsnip-integ'
+" Telescope (fuzzy finder)
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', {'on': 'Telescope'}
 " ==================================================== }}}
 
 " ================ Utility =========================== {{{
@@ -92,7 +92,7 @@ Plug 'ruanyl/vim-gh-line'                                       " github link
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'           " fuzzy search tool (cmd line tool - installed with homebrew)
 " Plug 'tpope/vim-dadbod'                                       " db conn with vim
 " Plug 'kristijanhusak/vim-dadbod-ui'                           " dadbod ui
-Plug 'psliwka/vim-smoothie'                                   " Smooth scrolling
+"Plug 'psliwka/vim-smoothie'                                   " Smooth scrolling
 " Plug 'takac/vim-hardtime'                                     " add delay on hjkl keys (easier hardmode)
 " Plug 'tpope/vim-obsession'                                    " Easier vim session management
 " Plug 'hardcoreplayers/dashboard-nvim'                         " custom start screen (like doom emacs)
